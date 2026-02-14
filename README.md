@@ -1,2 +1,6 @@
-# Impostor-online
-Online version of impostor with: astro, svelte, node and tailwind
+## Start with pnpm install 
+
+## Run with pnpm dev
+
+## Create .env file with the following content:
+
