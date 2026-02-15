@@ -26,6 +26,9 @@ importers:
       express:
         specifier: ^5.2.1
         version: 5.2.1
+      lucide-svelte:
+        specifier: ^0.564.0
+        version: 0.564.0(svelte@5.51.0)
       socket.io:
         specifier: ^4.8.3
         version: 4.8.3
@@ -1640,6 +1643,11 @@ packages:
   lru-cache@11.2.6:
     resolution: {integrity: sha512-ESL2CrkS/2wTPfuend7Zhkzo2u0daGJ/A2VucJOgQ/C48S/zB8MMeMHSGKYpXhIjbPxfuezITkaBH1wqv00DDQ==}
     engines: {node: 20 || >=22}
+
+  lucide-svelte@0.564.0:
+    resolution: {integrity: sha512-jeubFecyzbeze/Zwu5pFHHrv/u8OtiZ7VesXXus4cAnfRQlmb8TDtiC5gb485z8e4aAqe8FF7I0OVB/TDFAggg==}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5.0.0-next.42
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -3980,6 +3988,10 @@ snapshots:
   longest-streak@3.1.0: {}
 
   lru-cache@11.2.6: {}
+
+  lucide-svelte@0.564.0(svelte@5.51.0):
+    dependencies:
+      svelte: 5.51.0
 
   magic-string@0.30.21:
     dependencies:

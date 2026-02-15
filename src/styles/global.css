@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+@source "../components/";
+@source "../pages/";
+@source "../layouts/";
+
+:root {
+  --background: #bcb9b9;
+  --background-secondary: #e6e2e2;
+  --foreground: #222222;
+}
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
