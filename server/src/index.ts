@@ -4,10 +4,12 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import routes from './routes';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/api', routes);
 
 dotenv.config();
 
