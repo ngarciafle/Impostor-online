@@ -6,14 +6,12 @@
   let selection: 'initial' | 'create' | 'join' = 'initial';
 </script>
 
-<main>
-  {#if selection === 'initial'}
-    <Initial bind:selection />
-  {:else if selection === 'create'}
-    <Create bind:selection />
-  {:else if selection === 'join'}
-    <Join bind:selection />
-  {/if}
-</main>
+{#if selection === 'initial'}
+  <Initial bind:selection />
+{:else if selection === 'create'}
+  <Create bind:selection />
+{:else if selection === 'join'}
+  <Join bind:selection />
+{/if}
 
 
