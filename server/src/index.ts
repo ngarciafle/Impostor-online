@@ -29,8 +29,18 @@ mongoose.connect(process.env.MONGO_URI || /*configure mongo url */'', {
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
   socket.on('join-game', (gameId) => {
-    socket.join(gameId);
-    console.log(`User ${socket.id} joined game ${gameId}`);
+    const roomExist = io.sockets.adapter.rooms.has(gameId);
+
+    if (roomExist) {
+      socket.join(gameId);
+      console.log(`User ${socket.id} joined game ${gameId}`);
+      // to the client if successfully joined the room
+      socket.emit('join-response', { success: true });
+    } else {
+      console.log(`User ${socket.id} intentó unirse a la sala fantasma ${gameId}`);
+      // to the client if the room doesn't exist
+      socket.emit('join-response', { success: false, message: 'La sala no existe. Revisa el código.' });
+    }
   });
 
   socket.on('send-message', ({ gameId, message }) => {
