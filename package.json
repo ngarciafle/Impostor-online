@@ -1,33 +1,9 @@
 {
   "name": "impostor",
-  "type": "module",
-  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/node": "^9.5.3",
-    "@astrojs/svelte": "^7.2.5",
-    "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.17.1",
-    "cors": "^2.8.6",
-    "dotenv": "^17.3.1",
-    "express": "^5.2.1",
-    "lucide-svelte": "^0.564.0",
-    "socket.io": "^4.8.3",
-    "socket.io-client": "^4.8.3",
-    "svelte": "^5.51.0",
-    "tailwindcss": "^4.1.18"
-  },
-  "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.2.3",
-    "nodemon": "^3.1.11",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "dev": "pnpm --filter \"*\" run dev", 
+    "dev:client": "pnpm --filter client run dev",
+    "dev:server": "pnpm --filter server run dev"
   }
 }

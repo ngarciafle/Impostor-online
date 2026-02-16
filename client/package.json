@@ -1,0 +1,25 @@
+{
+  "name": "client",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.5.3",
+    "@astrojs/svelte": "^7.2.5",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.17.1",
+    "lucide-svelte": "^0.564.0",
+    "socket.io-client": "^4.8.3",
+    "svelte": "^5.51.0",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "typescript": "^5.9.3"
+  }
+}
