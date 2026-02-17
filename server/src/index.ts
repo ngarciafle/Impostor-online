@@ -19,9 +19,11 @@ const io = new Server(server, {
 });
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI || /*configure mongo url */'', {
+const mongoUrl = process.env.MONGO_URI as string;
+
+mongoose.connect(mongoUrl) /*configure mongo url */
   // --> CONFIGURE MONGO OPTIONS ** <-- 
-}).then(() => {
+.then(() => {
   console.log('Connected to MongoDB');
 }).catch((err) => {
   console.error('Error connecting to MongoDB:', err);
