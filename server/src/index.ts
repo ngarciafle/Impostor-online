@@ -29,6 +29,11 @@ mongoose.connect(process.env.MONGO_URI || /*configure mongo url */'', {
 
 // WebSocket connection
 io.on('connection', (socket) => {
+  // Game creation
+  socket.on('create-game', (gameId) => {
+    socket.join(gameId); // Al unirse el primero, la sala se crea oficialmente
+    console.log(`User ${socket.id} creó y se unió a la sala ${gameId}`);
+  });
   console.log('A user connected:', socket.id);
   socket.on('join-game', (gameId) => {
     const roomExist = io.sockets.adapter.rooms.has(gameId);
