@@ -19,9 +19,11 @@ const io = new Server(server, {
 });
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI || /*configure mongo url */'', {
+const mongoUrl = process.env.MONGO_URI as string;
+
+mongoose.connect(mongoUrl) /*configure mongo url */
   // --> CONFIGURE MONGO OPTIONS ** <-- 
-}).then(() => {
+.then(() => {
   console.log('Connected to MongoDB');
 }).catch((err) => {
   console.error('Error connecting to MongoDB:', err);
@@ -29,6 +31,11 @@ mongoose.connect(process.env.MONGO_URI || /*configure mongo url */'', {
 
 // WebSocket connection
 io.on('connection', (socket) => {
+  // Game creation
+  socket.on('create-game', (gameId) => {
+    socket.join(gameId); // Al unirse el primero, la sala se crea oficialmente
+    console.log(`User ${socket.id} creó y se unió a la sala ${gameId}`);
+  });
   console.log('A user connected:', socket.id);
   socket.on('join-game', (gameId) => {
     const roomExist = io.sockets.adapter.rooms.has(gameId);
