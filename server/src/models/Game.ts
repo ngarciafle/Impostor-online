@@ -1,12 +1,34 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema} from 'mongoose';
 
-const gameSchema = new mongoose.Schema({
+export interface IGame extends Document {
+  gameId: string;
+  players: {
+    socketId: string;
+    nombre: string;
+    lider: boolean;
+    impostor: boolean;
+  }[];
+  state: 'waiting' | 'round' | 'voting' | 'finished';
+  content: {
+    word?: string;
+    hint?: string;
+  };
+}
+
+const gameSchema = new Schema<IGame>({
   gameId: { type: String, required: true, unique: true },
   players: [{
     socketId: String,
     nombre: String,
-    lider: Boolean
-  }]
+    lider: Boolean,
+    impostor: Boolean,
+  }],
+  state: { 
+    type: String, 
+    enum: ['waiting', 'round', 'voting', 'finished'], 
+    default: 'waiting' 
+  },  
+  content: { word: String, hint: String },
 });
 
-export default mongoose.model('Game', gameSchema);
+export default mongoose.model<IGame>('Game', gameSchema);

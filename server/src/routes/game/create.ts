@@ -1,0 +1,19 @@
+import { Response, Request } from 'express';
+import { createGame } from '../../controllers/create';
+
+interface gameRequest {
+    socketId: string;
+    playerName: string;
+}
+
+export const createGameRoute = async (req: Request, res: Response) => {
+    const { socketId, playerName } = req.body as gameRequest;
+
+    try {
+        await createGame(playerName, socketId);
+        res.status(201).json({ message: 'Game created successfully' });
+    } catch (err) {
+        console.error('Error creating game:', err);
+        res.status(500).json({ message: 'Error creating game' });
+    }
+}

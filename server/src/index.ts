@@ -1,8 +1,8 @@
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import { connectDB }  from './config/db';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import routes from './routes';
 
@@ -18,16 +18,9 @@ const io = new Server(server, {
   cors: { origin: "http://localhost:4321" },
 });
 
-// MongoDB connection
-const mongoUrl = process.env.MONGO_URI as string;
+// Connect to MongoDB
+connectDB();
 
-mongoose.connect(mongoUrl) /*configure mongo url */
-  // --> CONFIGURE MONGO OPTIONS ** <-- 
-.then(() => {
-  console.log('Connected to MongoDB');
-}).catch((err) => {
-  console.error('Error connecting to MongoDB:', err);
-});
 
 // WebSocket connection
 io.on('connection', (socket) => {
