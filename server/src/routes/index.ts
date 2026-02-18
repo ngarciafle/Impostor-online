@@ -5,6 +5,6 @@ import { createGameRoute as createGame } from './game/create';
 const router = Router();
 
 router.get('/health', healthCheck);
-router.post('/game', createGame);
+router.post('/create-game', createGame);
 
 export default router;
