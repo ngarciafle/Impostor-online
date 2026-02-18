@@ -2,13 +2,13 @@ import Game from '../models/Game';
 
 
 
-export const joinGame = async (playerName: string, socketId: string) => {
-  const gameId = Math.random() * 10000;
+export const joinGame = async (playerName: string, socketId: string, gameId: string) => {
   //const { word, hint} = Importar la palabra y pista desde el contenedor de palabras
   try {
+    // No habria que crear un nuevo juego, sino unirse a uno existente *** 
     const newGame = new Game({
-      gameId: gameId.toString(),
-      players: [{ socketId, nombre: playerName, lider: true, impostor: false }],
+      gameId,
+      players: [{ name: playerName, socketId }],
       state: 'waiting',
     })
     await newGame.save();
