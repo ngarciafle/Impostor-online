@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { io, Socket } from "socket.io-client";
 
-  export let selection: 'initial' | 'create' | 'join';
+  export let selection: 'initial' | 'create' | 'join' | 'wait';
 
   let nombreJugador = "";
   let idSala = "";
