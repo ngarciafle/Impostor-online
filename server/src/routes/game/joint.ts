@@ -4,13 +4,14 @@ import { joinGame } from '../../controllers/join';
 interface gameRequest {
     socketId: string;
     playerName: string;
+    gameId: string;
 }
 
 export const joinGameRoute = async (req: Request, res: Response) => {
-    const { socketId, playerName } = req.body as gameRequest;
-
+    const { socketId, playerName, gameId } = req.body as gameRequest;
+    
     try {
-        await joinGame(playerName, socketId);
+        await joinGame(playerName, socketId, gameId);
         res.status(201).json({ message: 'Player joined game successfully' });
     } catch (err) {
         console.error('Error joining game:', err);

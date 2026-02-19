@@ -10,8 +10,8 @@ export const createGameRoute = async (req: Request, res: Response) => {
     const { socketId, playerName } = req.body as gameRequest;
 
     try {
-        await createGame(playerName, socketId);
-        res.status(201).json({ message: 'Game created successfully' });
+        const gameId = await createGame(playerName, socketId);
+        res.status(201).json({ message: 'Game created successfully', gameId });
     } catch (err) {
         console.error('Error creating game:', err);
         res.status(500).json({ message: 'Error creating game' });

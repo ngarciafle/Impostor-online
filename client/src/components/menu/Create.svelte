@@ -13,6 +13,10 @@
     socket.on("connect", () => {
       socketId = socket.id;
     })
+
+    return () => {
+      if (socket) socket.disconnect();
+    };
   });
 
   async function crearSala(evento: Event) {
@@ -20,6 +24,11 @@
 
     if (!name) {
         alert("Por favor, escribe tu nombre.");
+        return;
+    }
+
+    if (!socketId) {
+        alert("Error de conexión. Intenta de nuevo.");
         return;
     }
 
