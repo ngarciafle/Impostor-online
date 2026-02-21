@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { healthCheck} from './health';
 import { createGameRoute as createGame } from './game/create';
-import { joinGameRoute } from './game/joint';
+import { joinGameRoute } from './game/join';
 
 const router = Router();
 

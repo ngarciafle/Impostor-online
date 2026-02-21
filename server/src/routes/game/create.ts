@@ -3,14 +3,14 @@ import { createGame } from '../../controllers/create';
 
 interface gameRequest {
     socketId: string;
-    playerName: string;
+    name: string;
 }
 
 export const createGameRoute = async (req: Request, res: Response) => {
-    const { socketId, playerName } = req.body as gameRequest;
+    const { socketId, name } = req.body as gameRequest;
 
     try {
-        const gameId = await createGame(playerName, socketId);
+        const gameId = await createGame(name, socketId);
         res.status(201).json({ message: 'Game created successfully', gameId });
     } catch (err) {
         console.error('Error creating game:', err);

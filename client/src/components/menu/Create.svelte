@@ -4,7 +4,7 @@
 
   export let selection: 'initial' | 'create' | 'join' | 'wait';
 
-  let name = "";
+  export let name: string = "";
   let socket: Socket;
   let socketId: string | undefined;
 

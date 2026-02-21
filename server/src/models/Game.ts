@@ -4,8 +4,8 @@ export interface IGame extends Document {
   gameId: string;
   players: {
     socketId: string;
-    nombre: string;
-    lider: boolean;
+    name: string;
+    leader: boolean;
     impostor: boolean;
   }[];
   state: 'waiting' | 'round' | 'voting' | 'finished';
@@ -19,8 +19,8 @@ const gameSchema = new Schema<IGame>({
   gameId: { type: String, required: true, unique: true },
   players: [{
     socketId: String,
-    nombre: String,
-    lider: Boolean,
+    name: String,
+    leader: Boolean,
     impostor: Boolean,
   }],
   state: { 

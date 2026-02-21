@@ -1,6 +1,6 @@
 <script lang="ts">
-  let name = "";
-  let idRoom = "";
+  export let name: string = "";
+  export let idRoom: string = "";
   export let selection: 'initial' | 'create' | 'join' | 'wait';
   async function joinGame(event: Event) {
     event.preventDefault();
