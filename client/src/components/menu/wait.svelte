@@ -6,10 +6,13 @@
     export let idRoom: string;
     export let selection: 'initial' | 'create' | 'join' | 'wait';
     export let socket: Socket;
+    let players: string[] = [];
 
     onMount(() => {
-        socket.on("wait", () => {
-            console.log("Conectado al servidor con ID:", socket.id);
+        socket.emit("join-game", { name, idRoom });
+
+        socket.on("player-joined", (name) => {
+            players.push(name);
         });
     });
 
@@ -20,6 +23,7 @@
     <h1 class="text-3xl font-bold text-green-600 mb-4">¡Conectado! ✅</h1>
     <p class="text-xl">Has entrado a la sala: <strong class="text-blue-500">{idRoom}</strong></p>
     <p class="text-lg mt-2">Jugador: <strong>{name}</strong></p>
+    <p class="text-lg mt-2">Jugadores en la sala: <strong>{players.length}</strong></p>
 
     <div class="mt-8 p-4 border border-dashed border-gray-400 rounded-xl">
         <p class="opacity-70 animate-pulse">Esperando a que el líder inicie la partida...</p>

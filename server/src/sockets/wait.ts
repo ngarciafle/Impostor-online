@@ -4,9 +4,10 @@ export function setUpWaitSocket(io: Server) {
   io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
 
-  socket.on('wait', (gameId) => {
+  socket.on('join-game', (name, gameId) => {
     socket.join(gameId);
-    console.log(`User ${socket.id} joined game ${gameId}`);
+    socket.to(gameId).emit('player-joined', name);
+    console.log(`${name} joined game ${gameId}`);
   });
 
   socket.on('send-message', ({ gameId, senderName, message }) => {

@@ -28,8 +28,8 @@
 
     const data = await response.json();
     if (data.success) {
+      idRoom = data.gameId;
       selection = 'wait';
-      idRoom = data.idRoom;
     } else {
       alert("Error al crear la sala.");
     }
