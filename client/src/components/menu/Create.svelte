@@ -2,7 +2,7 @@
   export let selection: 'initial' | 'create' | 'join' | 'wait';
 
   export let name: string = "";
-  export let idRoom: string = "";
+  export let gameId: string = "";
   export let socketId: string | undefined;
 
   async function crearSala(evento: Event) {
@@ -28,7 +28,7 @@
 
     const data = await response.json();
     if (data.success) {
-      idRoom = data.gameId;
+      gameId = data.gameId;
       selection = 'wait';
     } else {
       alert("Error al crear la sala.");

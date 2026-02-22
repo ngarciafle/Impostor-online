@@ -3,16 +3,16 @@
     import { onMount } from 'svelte';
 
     export let name: string;
-    export let idRoom: string;
+    export let gameId: string;
     export let selection: 'initial' | 'create' | 'join' | 'wait';
     export let socket: Socket;
     let players: string[] = [];
 
     onMount(() => {
-        socket.emit("join-game", { name, idRoom });
+        socket.emit("join-game", { name, gameId });
 
         socket.on("player-joined", (name) => {
-            players.push(name);
+            players = [...players, name];
         });
     });
 
@@ -21,7 +21,7 @@
 
 <div class="flex flex-col items-center mt-10">
     <h1 class="text-3xl font-bold text-green-600 mb-4">¡Conectado! ✅</h1>
-    <p class="text-xl">Has entrado a la sala: <strong class="text-blue-500">{idRoom}</strong></p>
+    <p class="text-xl">Has entrado a la sala: <strong class="text-blue-500">{gameId}</strong></p>
     <p class="text-lg mt-2">Jugador: <strong>{name}</strong></p>
     <p class="text-lg mt-2">Jugadores en la sala: <strong>{players.length}</strong></p>
 
@@ -35,7 +35,7 @@
 <!-- {:else}
   <div class="flex flex-col items-center mt-10">
     <h1 class="text-3xl font-bold text-green-600 mb-4">¡Sala Creada! 👑</h1>
-    <p class="text-xl">Código para tus amigos: <strong class="text-blue-500 text-3xl ml-2">{idRoom}</strong></p>
+    <p class="text-xl">Código para tus amigos: <strong class="text-blue-500 text-3xl ml-2">{gameId}</strong></p>
     <p class="text-lg mt-2">Líder: <strong>{name}</strong></p>
     
     <div class="mt-8 p-4 border border-dashed border-gray-400 rounded-xl">

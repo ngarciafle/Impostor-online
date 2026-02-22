@@ -10,7 +10,7 @@
   let socket: Socket;
   let socketId: string | undefined;
   let name: string;
-  let idRoom: string;
+  let gameId: string;
   let selection: 'initial' | 'create' | 'join' | 'wait' = 'initial';
 
   onMount(() => {
@@ -24,11 +24,11 @@
 {#if selection === 'initial'}
   <Initial bind:selection/>
 {:else if selection === 'create'}
-  <Create bind:selection bind:name bind:idRoom bind:socketId/>
+  <Create bind:selection bind:name bind:gameId bind:socketId/>
 {:else if selection === 'join'}
-  <Join bind:selection bind:name bind:idRoom bind:socketId/>
+  <Join bind:selection bind:name bind:gameId bind:socketId/>
 {:else if selection === 'wait'}
-  <Wait bind:selection bind:name bind:idRoom socket={socket} />
+  <Wait bind:selection bind:name bind:gameId socket={socket} />
 {/if}
 
 
