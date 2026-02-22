@@ -1,12 +1,22 @@
 import { Server } from "socket.io";
+import Game from "../models/Game";
 
 export function setUpWaitSocket(io: Server) {
   io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
 
-  socket.on('join-game', ({name, gameId}) => {
+  socket.on('join-game', async ({name, gameId}) => {
     socket.join(gameId);
-    io.to(gameId).emit('player-joined', name);
+
+    const game = await Game.findOne({ gameId });
+    if (!game) {
+      console.error(`Game with ID ${gameId} not found`);
+      return;
+    }
+
+    const players = game.players.map(player => player.name);
+
+    io.to(gameId).emit('player-joined', players);
     console.log(`${name} joined game ${gameId}`);
   });
 
