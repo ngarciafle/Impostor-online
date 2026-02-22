@@ -5,6 +5,7 @@ import { connectDB }  from './config/db';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import routes from './routes';
+import { setUpWaitSocket } from './sockets/wait';
 
 const app = express();
 app.use(cors());
@@ -17,6 +18,8 @@ const server = createServer(app);
 const io = new Server(server, {
   cors: { origin: "http://localhost:4321" },
 });
+//WebSockets for wait room
+setUpWaitSocket(io);
 
 
 // Connect to MongoDB
