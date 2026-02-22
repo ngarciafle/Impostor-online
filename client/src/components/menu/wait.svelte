@@ -1,12 +1,17 @@
 <script lang="ts">
-    import { io, Socket } from "socket.io-client";  
+    import { io, Socket } from "socket.io-client";
+    import { onMount } from 'svelte';
 
     export let name: string;
     export let idRoom: string;
     export let selection: 'initial' | 'create' | 'join' | 'wait';
     export let socket: Socket;
 
-    
+    onMount(() => {
+        socket.on("wait", () => {
+            console.log("Conectado al servidor con ID:", socket.id);
+        });
+    });
 
 </script>
 
