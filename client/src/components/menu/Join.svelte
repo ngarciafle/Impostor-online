@@ -1,7 +1,12 @@
 <script lang="ts">
+  import { io, type Socket } from "socket.io-client";
   export let name: string = "";
   export let idRoom: string = "";
   export let selection: 'initial' | 'create' | 'join' | 'wait';
+  export let socketId: string | undefined;
+
+
+
   async function joinGame(event: Event) {
     event.preventDefault();
     const response = await fetch("http://localhost:3000/api/join-game", {
@@ -9,7 +14,7 @@
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ nombreJugador: name, idSala: idRoom }),
+        body: JSON.stringify({ name: name, idSala: idRoom, socketId }),
     });
   }
 
@@ -23,17 +28,6 @@
   // let unido = false;
   // let socket: Socket;
 
-  // onMount(() => {
-  //   socket = io("http://localhost:3000");
-
-  //   socket.on("join-response", (respuesta) => {
-  //       if (respuesta.success) {
-  //           unido = true;
-  //       } else {
-  //           alert(respuesta.message);
-  //       }
-  //   });
-  // });
 
   // function unirseSala(evento: Event) {
   //   evento.preventDefault(); 
