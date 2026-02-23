@@ -18,7 +18,27 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
         game.content.word = word;
         game.content.hint = hint;
 
-        gameSocket(io, gameId, word, hint);
+        // Calculate impostors
+        const numPlayers = game.players.length;
+        const numImpostors = Math.floor(numPlayers / 4);
+        const shuffled = [...game.players];
+        // Better shuffle with Fisher-Yates algorithm
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }   
+        // Assign impostor roles
+        for (let i = 0; i < numImpostors; i++) {
+            shuffled[i].impostor = true;
+        }
+
+        for (const player of game.players) {
+            if (player.impostor) {
+                gameSocket(io, player.socketId, hint, player.impostor);
+            } else {
+                gameSocket(io, player.socketId, word, player.impostor);
+            }
+        }
         game.state = 'card';
         // add call to websocket pass words
         await game.save();

@@ -22,7 +22,7 @@
     });
 
     async function startGame() {
-        await fetch(`http://localhost:3000/start-game`, {
+        await fetch(`http://localhost:3000/api/start-game`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
