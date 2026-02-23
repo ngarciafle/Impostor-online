@@ -7,7 +7,7 @@ export const startGame = async (gameId: string, socketId: string) => {
 
         const player = game.players.find(p => p.socketId === socketId);
         if (!player) throw new Error('Player not found in game');
-        if (!player.leader) throw new Error('Player is not the leader');
+        if (!player.leader) throw new Error('Unable to start game, player is not the leader');
 
         game.state = 'card';
         // add call to websocket pass words

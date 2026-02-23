@@ -11,6 +11,6 @@ router.get('/health', healthCheck);
 router.post('/create-game', createGame);
 router.post('/join-game', joinGameRoute);
 router.post('/start-game', startGame);
-router.post('/get-role', getRoleRoute);
+router.get('/get-role', getRoleRoute);
 
 export default router;

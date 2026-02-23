@@ -4,6 +4,7 @@
 
     export let name: string;
     export let gameId: string;
+    export let leader: boolean;
     export let selection: 'initial' | 'create' | 'join' | 'wait';
     export let socket: Socket;
     let players: string[] = [];
@@ -15,6 +16,16 @@
             players = newPlayers;
         });
     });
+
+    async function startGame() {
+        const response = await fetch(`http://localhost:3000/start-game`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ gameId, socketId: socket.id })
+        });
+    }
 
 </script>
 
@@ -31,10 +42,16 @@
     </ul>
 
 
-
+    {#if leader}
     <div class="mt-8 p-4 border border-dashed border-gray-400 rounded-xl">
         <p class="opacity-70 animate-pulse">Esperando a que el líder inicie la partida...</p>
     </div>
+    {:else}
+        <button on:click={startGame}>
+            Empezar partida
+        </button>
+
+    {/if}
 
     <button on:click={() => selection = 'initial'} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>
 </div>
