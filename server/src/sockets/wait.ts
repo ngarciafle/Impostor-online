@@ -1,9 +1,7 @@
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import Game from "../models/Game";
 
-export function setUpWaitSocket(io: Server) {
-  io.on('connection', (socket) => {
-  console.log('A user connected:', socket.id);
+export function waitSocket(io: Server, socket: Socket) {
 
   socket.on('join-game', async ({name, gameId}) => {
     socket.join(gameId);
@@ -29,11 +27,5 @@ export function setUpWaitSocket(io: Server) {
     });
     console.log(`Message sent to game ${gameId} from ${senderName}`);
   });
-
-  // 
-  socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
-  });
-});
 
 }

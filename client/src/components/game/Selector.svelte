@@ -16,4 +16,3 @@
 {:else if selection === 'words'}
   <Words />
 {/if}
-

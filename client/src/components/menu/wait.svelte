@@ -15,10 +15,14 @@
         socket.on("player-joined", (newPlayers) => {
             players = newPlayers;
         });
+
+        socket.on("game-started", (data) => {
+            window.location.href = `game/${gameId}`;
+        });
     });
 
     async function startGame() {
-        const response = await fetch(`http://localhost:3000/start-game`, {
+        await fetch(`http://localhost:3000/start-game`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
