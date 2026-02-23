@@ -14,7 +14,7 @@ export function setUpRoutes(app: Express, io: Server) {
   app.get('/api/health', healthCheck);
   app.post('/api/create-game', createGame);
   app.post('/api/join-game', joinGameRoute);
-  app.post('/api/start-game', startGame);
+  app.post('/api/start-game', (req, res) => startGame(req, res, io));
   app.get('/api/get-role', getRoleRoute);
 }
 
