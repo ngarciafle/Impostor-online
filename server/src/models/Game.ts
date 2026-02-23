@@ -8,7 +8,7 @@ export interface IGame extends Document {
     leader: boolean;
     impostor: boolean;
   }[];
-  state: 'waiting' | 'round' | 'voting' | 'finished';
+  state: 'waiting' | 'card' |'round' | 'voting' | 'finished';
   content: {
     word?: string;
     hint?: string;
