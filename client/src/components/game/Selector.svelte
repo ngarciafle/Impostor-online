@@ -3,6 +3,7 @@
   import Card from "./Card.svelte";
   import Words from "./Words.svelte";
   let role: 'impostor' | 'crewmate';
+  let word: string;
   export let selection: 'card' | 'words' = 'card';
 
   onMount(() => {
@@ -16,3 +17,5 @@
 {:else if selection === 'words'}
   <Words />
 {/if}
+
+<h1>This is the game page</h1>
