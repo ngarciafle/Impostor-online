@@ -25,7 +25,7 @@ const gameSchema = new Schema<IGame>({
   }],
   state: { 
     type: String, 
-    enum: ['waiting', 'round', 'voting', 'finished'], 
+    enum: ['waiting', 'card', 'round', 'voting', 'finished'], 
     default: 'waiting' 
   },  
   content: { word: String, hint: String },

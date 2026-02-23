@@ -40,7 +40,6 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
             }
         }
         game.state = 'card';
-        // add call to websocket pass words
         await game.save();
     } catch (error) {
         throw error;
