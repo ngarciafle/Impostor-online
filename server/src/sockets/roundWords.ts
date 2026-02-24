@@ -20,7 +20,6 @@ export function roundWordsSocket(io: Server, socket: Socket) {
       io.to(gameId).emit('round-ended', { message: "Voting phase has started" });
     }
 
-    io.to(gameId).emit('init-turn', { nextPlayer });  
 
     socket.emit('turn-result', { success: true });
   });

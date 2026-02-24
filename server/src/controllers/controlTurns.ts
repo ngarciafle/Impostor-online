@@ -11,14 +11,16 @@ export const controlTurns = async (gameId: string, socketId: string) => {
 
         let votePhase = false;
         let nextIdx = currentPlayerIndex + 1;
-        game.players[currentPlayerIndex].turn = false;
-        game.players[0].turn = true; // Loop back to the first player
-
+        
         if (currentPlayerIndex === game.players.length - 1) {
             game.state = 'votes'; 
             votePhase = true;
             nextIdx = 0; // Reset to first player for voting phase
         }
+
+        game.players[currentPlayerIndex].turn = false;
+        game.players[nextIdx].turn = true; // Decide whose turn is next
+        
         await game.save();
         return { success: true, votePhase, nextPlayer: game.players[nextIdx].socketId };
     } catch (err) {

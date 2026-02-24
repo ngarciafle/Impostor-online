@@ -7,7 +7,7 @@
 
 
     onMount(() => {
-        socket.on("init-turn", () => {
+        socket.on("init-turn", (data) => {
             turn = true;
         }) 
 

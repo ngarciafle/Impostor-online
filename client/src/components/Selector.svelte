@@ -40,9 +40,9 @@
 {:else if selection === 'card'}
   <Card word={word} role={role} socket={socket} bind:selection={selection}/>
 {:else if selection === 'words'}
-  <Words socket={socket} selection={selection}/>
+  <Words socket={socket} bind:selection={selection}/>
 {:else if selection === 'votes'}
-  <Voting socket={socket} selection={selection}/>
+  <Voting socket={socket} bind:selection={selection}/>
 {/if}
 
 

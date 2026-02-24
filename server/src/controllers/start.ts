@@ -20,7 +20,7 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
 
         // Calculate impostors
         const numPlayers = game.players.length;
-        const numImpostors = Math.floor(numPlayers / 4);
+        const numImpostors = Math.floor(numPlayers / 4) + 1; // 1 impostor per 4 players, minimum 1
         const shuffled = [...game.players];
         // Better shuffle with Fisher-Yates algorithm
         for (let i = shuffled.length - 1; i > 0; i--) {
@@ -57,8 +57,8 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
         const firstPlayerSocketId = game.players[0].socketId;
 
         await game.save();
-        io.to(firstPlayerSocketId).emit('init-turn', { message: "Your turn has started" });
         io.to(gameId).emit('round-started', { message: "Round has started" });
+        io.to(firstPlayerSocketId).emit('init-turn', { message: "Your turn has started" });
     } catch (error) {
         throw error;
     }
