@@ -13,6 +13,7 @@ export interface IGame extends Document {
     word?: string;
     hint?: string;
   };
+  chat: string[];
 }
 
 const gameSchema = new Schema<IGame>({
@@ -29,6 +30,7 @@ const gameSchema = new Schema<IGame>({
     default: 'waiting' 
   },  
   content: { word: String, hint: String },
+  chat: [String],
 });
 
 export default mongoose.model<IGame>('Game', gameSchema);
