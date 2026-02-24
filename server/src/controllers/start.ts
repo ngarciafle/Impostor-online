@@ -44,6 +44,18 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
         await new Promise(resolve => setTimeout(resolve, 10000));
 
         game.state = 'round';
+        // Shuffle again to randomize turn order
+        const shuffledAgain = [...game.players];
+        for (let i = shuffledAgain.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledAgain[i], shuffledAgain[j]] = [shuffledAgain[j], shuffledAgain[i]];
+        }   
+
+
+        game.players = shuffledAgain;
+        game.players[0].turn = true; // Start with the first player
+
+        
         await game.save();
         io.to(gameId).emit('round-started', { message: "Round has started" });
     } catch (error) {

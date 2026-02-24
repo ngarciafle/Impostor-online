@@ -7,12 +7,16 @@
 
 
     onMount(() => {
-        socket.on("my-turn", () => {
+        socket.on("init-turn", () => {
             turn = true;
         }) 
 
-        socket.on("stop-turn", () => {
-            turn = false;
+        socket.on("turn-result", (data: any) => {
+            if (data.success) {
+                turn = false;
+            } else {
+                alert("Error: " + data.message);
+            }
         })
 
         socket.on("round-ended", () => {
@@ -25,7 +29,7 @@
         const form = event.target as HTMLFormElement;
         const formData = new FormData(form);
         const word = formData.get("word") as string;
-        socket.emit('send-message', { gameId: 'some-game-id', senderName: 'Player1', word: word });
+        socket.emit('send-word', { gameId: 'some-game-id', senderName: 'Player1', word: word });
     }
 </script>
 
