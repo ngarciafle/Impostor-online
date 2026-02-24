@@ -8,6 +8,7 @@
   import Wait from './menu/Wait.svelte';
   import Card from "./game/Card.svelte";
   import Words from "./game/Words.svelte";
+  import Voting from "./game/Voting.svelte";
 
   
   let role: 'impostor' | 'crewmate' = 'crewmate';
@@ -37,9 +38,11 @@
 {:else if selection === 'wait'}
   <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} />
 {:else if selection === 'card'}
-  <Card word={word} role={role} socket={socket} selection={selection}/>
+  <Card word={word} role={role} socket={socket} bind:selection={selection}/>
 {:else if selection === 'words'}
   <Words socket={socket} selection={selection}/>
+{:else if selection === 'votes'}
+  <Voting socket={socket} selection={selection}/>
 {/if}
 
 

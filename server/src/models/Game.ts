@@ -7,6 +7,7 @@ export interface IGame extends Document {
     name: string;
     leader: boolean;
     impostor: boolean;
+    turn: boolean;
   }[];
   state: 'waiting' | 'card' |'round' | 'votes' | 'finished';
   content: {
@@ -23,6 +24,7 @@ const gameSchema = new Schema<IGame>({
     name: String,
     leader: Boolean,
     impostor: Boolean,
+    turn: Boolean,
   }],
   state: { 
     type: String, 

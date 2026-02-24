@@ -7,7 +7,7 @@ export const joinGame = async (name: string, socketId: string, gameId: string) =
   try {
     const game = await Game.findOne({ gameId });
     if (!game) throw new Error('Game not found');
-    game.players.push({ name: name, socketId, leader: false, impostor: false });
+    game.players.push({ name: name, socketId, leader: false, impostor: false, turn: false });
     await game.save();
   } catch (err) {
     console.error('Error joining game:', err);

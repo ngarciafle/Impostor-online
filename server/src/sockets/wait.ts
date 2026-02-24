@@ -18,14 +18,4 @@ export function waitSocket(io: Server, socket: Socket) {
     console.log(`${name} joined game ${gameId}`);
   });
 
-  socket.on('send-message', ({ gameId, senderName, message }) => {
-    // ¡NUEVO! Enviamos el mensaje estructurado con el nombre del jugador
-    io.to(gameId).emit('receive-message', {
-      sender: senderName,
-      text: message,
-      timestamp: new Date().toLocaleTimeString()
-    });
-    console.log(`Message sent to game ${gameId} from ${senderName}`);
-  });
-
 }

@@ -19,7 +19,7 @@
         });
 
         socket.on("game-started", (data) => {
-            if (role) {
+            if (data.impostor) {
                 role = 'impostor';
             } else {
                 role = 'crewmate';
