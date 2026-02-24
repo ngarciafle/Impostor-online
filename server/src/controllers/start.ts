@@ -54,9 +54,10 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
 
         game.players = shuffledAgain;
         game.players[0].turn = true; // Start with the first player
+        const firstPlayerSocketId = game.players[0].socketId;
 
-        
         await game.save();
+        io.to(firstPlayerSocketId).emit('init-turn', { message: "Your turn has started" });
         io.to(gameId).emit('round-started', { message: "Round has started" });
     } catch (error) {
         throw error;
