@@ -41,6 +41,11 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
         }
         game.state = 'card';
         await game.save();
+        await new Promise(resolve => setTimeout(resolve, 10000));
+
+        game.state = 'round';
+        await game.save();
+        io.to(gameId).emit('round-started');
     } catch (error) {
         throw error;
     }

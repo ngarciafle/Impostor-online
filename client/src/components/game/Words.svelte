@@ -1,5 +1,7 @@
 <script lang="ts">
-    
+    import { io, type Socket } from "socket.io-client";
+    export let socket: Socket;
+    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words';
 
 </script>
 

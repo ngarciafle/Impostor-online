@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let selection: 'initial' | 'create' | 'join' | 'wait';
+  export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words';
 
   export let name: string = "";
   export let gameId: string = "";

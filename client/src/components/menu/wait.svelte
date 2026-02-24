@@ -5,7 +5,9 @@
     export let name: string;
     export let gameId: string;
     export let leader: boolean;
-    export let selection: 'initial' | 'create' | 'join' | 'wait';
+    export let role: 'impostor' | 'crewmate';
+    export let word: string;
+    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words';
     export let socket: Socket;
     let players: string[] = [];
 
@@ -17,7 +19,13 @@
         });
 
         socket.on("game-started", (data) => {
-            window.location.href = `game/${gameId}`;
+            if (role) {
+                role = 'impostor';
+            } else {
+                role = 'crewmate';
+            }
+            word = data.word;
+            selection = 'card';
         });
     });
 
