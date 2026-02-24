@@ -17,7 +17,7 @@
   let socketId: string | undefined;
   let name: string;
   let gameId: string;
-  let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' = 'initial';
+  let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' = 'initial';
 
 
   onMount(() => {

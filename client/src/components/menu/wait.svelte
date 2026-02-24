@@ -7,7 +7,7 @@
     export let leader: boolean;
     export let role: 'impostor' | 'crewmate';
     export let word: string;
-    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words';
+    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes';
     export let socket: Socket;
     let players: string[] = [];
 
