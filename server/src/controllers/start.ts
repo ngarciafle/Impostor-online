@@ -56,6 +56,9 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
         game.players[0].turn = true; // Start with the first player
         const firstPlayerSocketId = game.players[0].socketId;
 
+        game.numberOfImpostors = numImpostors;
+        game.numberOfCrewmates = numPlayers - numImpostors;
+
         await game.save();
         io.to(gameId).emit('round-started', { message: "Round has started" });
         io.to(firstPlayerSocketId).emit('init-turn', { message: "Your turn has started" });

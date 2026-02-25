@@ -19,6 +19,8 @@ export interface IGame extends Document {
   chat: string[];
   votes: number;
   playersOut: number;
+  numberOfImpostors?: number;
+  numberOfCrewmates?: number;
 }
 
 const gameSchema = new Schema<IGame>({
@@ -41,6 +43,8 @@ const gameSchema = new Schema<IGame>({
   chat: [String],
   votes: { type: Number, default: 0 },
   playersOut: { type: Number, default: 0 },
+  numberOfImpostors: { type: Number, default: 0 },
+  numberOfCrewmates: { type: Number, default: 0 },
 });
 
 export default mongoose.model<IGame>('Game', gameSchema);
