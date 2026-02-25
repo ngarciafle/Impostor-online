@@ -4,7 +4,7 @@
     export let socket: Socket;
     export let word: string;
     export let role: 'impostor' | 'crewmate';
-    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes';
+    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
     let show: boolean = false;
 
     onMount(() => {

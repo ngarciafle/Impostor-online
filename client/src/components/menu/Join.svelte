@@ -2,7 +2,7 @@
   import { io, type Socket } from "socket.io-client";
   export let name: string = "";
   export let gameId: string = "";
-  export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes';
+  export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
   export let socketId: string | undefined;
 
 

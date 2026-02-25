@@ -1,5 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { controlTurns } from '../controllers/controlTurns';
+import Game from '../models/Game';
 
 export function roundWordsSocket(io: Server, socket: Socket) {
 
@@ -14,6 +15,9 @@ export function roundWordsSocket(io: Server, socket: Socket) {
 
     if (votePhase) {
       io.to(gameId).emit('round-ended', { message: "Voting phase has started" });
+      // Fetch the players when entering to the voting phase
+      const gameData = await Game.findOne({ gameId }).select('players');
+      io.to(gameId).emit('get-players', { players: gameData?.players || [] });
     }
 
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CirclePlay, CirclePlus } from 'lucide-svelte';
 
-  export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes';
+  export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
 </script>
 
 <h1 class="text-2xl">Impostor Online🕵️‍♂️</h1>

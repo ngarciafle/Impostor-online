@@ -3,7 +3,7 @@
     import { onMount } from 'svelte';
     export let socket: Socket;
     export let gameId: string;
-    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes';
+    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
     let turn: boolean = false;
     export let words: any[];
     export let name: string;

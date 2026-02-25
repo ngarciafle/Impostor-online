@@ -9,6 +9,7 @@
   import Card from "./game/Card.svelte";
   import Words from "./game/Words.svelte";
   import Voting from "./game/Voting.svelte";
+  import End from "./game/End.svelte";
 
   
   let role: 'impostor' | 'crewmate' = 'crewmate';
@@ -18,7 +19,7 @@
   let socketId: string | undefined;
   let name: string;
   let gameId: string;
-  let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' = 'initial';
+  let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end' = 'initial';
   let words: string[] = [];
 
 
@@ -43,7 +44,9 @@
 {:else if selection === 'words'}
   <Words socket={socket} bind:selection={selection} bind:words={words} gameId={gameId} name={name} />
 {:else if selection === 'votes'}
-  <Voting socket={socket} bind:selection={selection}/>
+  <Voting socket={socket} bind:selection={selection} gameId={gameId} />
+{:else if selection === 'end'}
+  <End socket={socket} bind:selection={selection}/>
 {/if}
 
 

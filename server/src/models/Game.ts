@@ -8,13 +8,17 @@ export interface IGame extends Document {
     leader: boolean;
     impostor: boolean;
     turn: boolean;
+    votes: number;
+    alive: boolean;
   }[];
-  state: 'waiting' | 'card' |'round' | 'votes' | 'finished';
+  state: 'waiting' | 'card' |'round' | 'votes' | 'finished' | 'end';
   content: {
     word?: string;
     hint?: string;
   };
   chat: string[];
+  votes: number;
+  playersOut: number;
 }
 
 const gameSchema = new Schema<IGame>({
@@ -25,14 +29,18 @@ const gameSchema = new Schema<IGame>({
     leader: Boolean,
     impostor: Boolean,
     turn: Boolean,
+    votes: { type: Number, default: 0 },
+    alive: { type: Boolean, default: true },
   }],
   state: { 
     type: String, 
-    enum: ['waiting', 'card', 'round', 'votes', 'finished'], 
+    enum: ['waiting', 'card', 'round', 'votes', 'finished', 'end'], 
     default: 'waiting' 
   },  
   content: { word: String, hint: String },
   chat: [String],
+  votes: { type: Number, default: 0 },
+  playersOut: { type: Number, default: 0 },
 });
 
 export default mongoose.model<IGame>('Game', gameSchema);
