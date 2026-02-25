@@ -19,6 +19,7 @@
   let name: string;
   let gameId: string;
   let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' = 'initial';
+  let words: string[] = [];
 
 
   onMount(() => {
@@ -40,7 +41,7 @@
 {:else if selection === 'card'}
   <Card word={word} role={role} socket={socket} bind:selection={selection}/>
 {:else if selection === 'words'}
-  <Words socket={socket} bind:selection={selection}/>
+  <Words socket={socket} bind:selection={selection} bind:words={words} gameId={gameId} name={name} />
 {:else if selection === 'votes'}
   <Voting socket={socket} bind:selection={selection}/>
 {/if}

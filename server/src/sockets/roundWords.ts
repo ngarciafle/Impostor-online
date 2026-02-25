@@ -2,10 +2,6 @@ import { Server, Socket } from 'socket.io';
 import { controlTurns } from '../controllers/controlTurns';
 
 export function roundWordsSocket(io: Server, socket: Socket) {
-  //     sender: senderName,
-  //     word: word,
-  //     timestamp: new Date().toLocaleTimeString()
-
 
   // Need to store inside the db the data && distribute word
   // Improve the logic and maybe move it to controllers ???? 
@@ -22,6 +18,8 @@ export function roundWordsSocket(io: Server, socket: Socket) {
 
 
     socket.emit('turn-result', { success: true });
+
+    socket.to(gameId).emit('new-word', { sender: senderName, word });
   });
 
 }
