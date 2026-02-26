@@ -51,7 +51,7 @@
         {#if turn}
             <form on:submit={sendMessage}>
                 <input type="text" name="word" placeholder="Enter a word" />
-                <button type="submit">Send</button>
+                <button type="submit" class="flex gap-1 bg-background-secondary shadow shadow-foreground py-2 rounded-2xl hover:scale-105 transition-transform duration-300">Send</button>
             </form>
         {:else}
             <p class="text-center text-gray-500">Esperando tu turno...</p>

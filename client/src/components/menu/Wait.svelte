@@ -59,7 +59,7 @@
         <p class="opacity-70 animate-pulse">Esperando a que el líder inicie la partida...</p>
     </div>
     {:else}
-        <button on:click={startGame}>
+        <button on:click={startGame} class="mt-6 md:mt-8 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">
             Empezar partida
         </button>
 

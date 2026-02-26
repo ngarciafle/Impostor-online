@@ -16,7 +16,7 @@
 
 
 <h1 class="text-2xl md:text-3xl font-bold text-center mb-4">{role}</h1>
-<button class="aspect-9/16 bg-amber-100 w-30 md:w-40 xl-w-50 flex items-center justify-center rounded-2xl" on:click={() => show = !show}>
+<button class="aspect-9/16 bg-amber-100 w-30 md:w-40 xl-w-50 flex items-center justify-center rounded-2xl shadow shadow-blue-950" on:click={() => show = !show}>
     {#if show}
         <h2 class="text-xl md:text-2xl font-semibold">{word}</h2>
     {:else}

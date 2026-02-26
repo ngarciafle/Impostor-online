@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { SocketAddress } from "node:net";
     import { io, type Socket } from "socket.io-client";
     import { onMount } from 'svelte';
     export let socket: Socket;
