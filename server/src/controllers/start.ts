@@ -41,8 +41,8 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
         }
         game.state = 'card';
         await game.save();
-        await new Promise(resolve => setTimeout(resolve, 10000));
 
+        setTimeout(async () => {
         game.state = 'round';
         // Shuffle again to randomize turn order
         const shuffledAgain = [...game.players];
@@ -61,6 +61,7 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
 
         await game.save();
         io.to(gameId).emit('round-started', { message: "Round has started" });
+    }, 10000)
     } catch (error) {
         throw error;
     }

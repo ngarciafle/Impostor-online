@@ -10,12 +10,11 @@
 
 
     onMount(() => {
-        socket.emit('words-ready', { success: true }); // Notify server that the client is ready to receive the init-turn event
-        
         socket.on("init-turn", (data) => {
+            if (!data.success) return alert("Error: " + data.message);
             turn = true;
         }) 
-
+        
         socket.on("turn-result", (data: any) => {
             if (data.success) {
                 turn = false;
@@ -23,14 +22,16 @@
                 alert("Error: " + data.message);
             }
         })
-
+        
         socket.on("round-ended", () => {
             selection = 'votes';
         })
-
+        
         socket.on("new-word", (data: any) => {
             words = [...words, data];
         })
+
+        socket.emit('words-ready', { gameId }); // Notify server that the client is ready to receive the init-turn event
     })
 
     function sendMessage(event: Event) {

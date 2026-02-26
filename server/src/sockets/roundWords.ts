@@ -4,7 +4,7 @@ import Game from '../models/Game';
 
 export function roundWordsSocket(io: Server, socket: Socket) {
   socket.on('words-ready', async ({ gameId }) => {
-    const data = await Game.findOne({ gameId }).select('players');
+    const data = await Game.findOne({ gameId });
     if (!data) return;
 
     data.players.forEach((player: any) => {
