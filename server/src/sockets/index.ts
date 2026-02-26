@@ -3,6 +3,7 @@ import { waitSocket } from "./wait";
 // import { gameSocket } from "./game";
 import { chatSocket } from "./chat";
 import { roundWordsSocket } from "./roundWords";
+import { socketVotes } from "./votes";
 
 
 export function setUpSocket(io: Server) {
@@ -12,6 +13,7 @@ export function setUpSocket(io: Server) {
   // gameSocket(io, socket);
   chatSocket(io, socket);
   roundWordsSocket(io, socket);
+  socketVotes(io, socket);
 
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);

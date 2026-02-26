@@ -61,7 +61,6 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
 
         await game.save();
         io.to(gameId).emit('round-started', { message: "Round has started" });
-        io.to(firstPlayerSocketId).emit('init-turn', { message: "Your turn has started" });
     } catch (error) {
         throw error;
     }

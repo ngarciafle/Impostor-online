@@ -10,6 +10,8 @@
 
 
     onMount(() => {
+        socket.emit('words-ready', { success: true }); // Notify server that the client is ready to receive the init-turn event
+        
         socket.on("init-turn", (data) => {
             turn = true;
         }) 

@@ -16,6 +16,7 @@ export const controlTurns = async (gameId: string, socketId: string) => {
             game.state = 'votes'; 
             votePhase = true;
             nextIdx = 0; // Reset to first player for voting phase
+            return { success: true, votePhase, nextPlayerSocket: null };
         }
 
         game.players[currentPlayerIndex].turn = false;
