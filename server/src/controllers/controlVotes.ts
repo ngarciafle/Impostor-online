@@ -6,9 +6,12 @@ export const controlVotes = async (gameId: string, playerName: string) => {
         if (!game) throw new Error('Game not found');
 
         game.votes += 1;
-        // Find the voted player
-        const votedPlayer = game.players.find(player => player.name === playerName);
-        if (votedPlayer) votedPlayer.votes += 1;
+        // Find the voted player & control skip vote
+        if (playerName !== null) {
+            const votedPlayer = game.players.find(player => player.name === playerName);
+            if (!votedPlayer) throw new Error('Voted player not found');
+            votedPlayer.votes += 1;
+        } 
 
         await game.save();
 
@@ -19,7 +22,7 @@ export const controlVotes = async (gameId: string, playerName: string) => {
         const maxVotes = Math.max(...game.players.map(player => player.votes));
         const votedOutPlayers = game.players.filter(player => player.votes === maxVotes);
 
-        if (votedOutPlayers.length > 1) return; // In case of a tie, no one is voted out
+        if (votedOutPlayers.length > 1) return {end: true, vote: 'tie'}; // In case of a tie, no one is voted out
 
         const votedOutPlayer = votedOutPlayers[0];
         votedOutPlayer.alive = false;
@@ -31,8 +34,10 @@ export const controlVotes = async (gameId: string, playerName: string) => {
             game.numberOfCrewmates! -= 1;
         }
 
-        // End voting phase
+        //Reset votes
+        resetVotes(game);
 
+        // End voting phase
         // End game if nº impostors >= nº crewmates
         if (game.players.length - game.playersOut <= 2) {
             game.state = 'end';
@@ -48,4 +53,12 @@ export const controlVotes = async (gameId: string, playerName: string) => {
     } catch (err) {
         console.log('Error in controlVotes:', err);
     }
+}
+
+function resetVotes(game: any) {
+    game.votes = 0;
+    game.players.forEach((player: any) => {
+        player.votes = 0;
+    });
+    game.save();
 }
