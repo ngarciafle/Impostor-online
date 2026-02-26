@@ -14,7 +14,10 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
         game.votes += 1;
         // Find the voted player & control skip vote
         if (playerName !== null) {
+            console.log('Player name received for voting:', playerName);
             const votedPlayer = game.players.find(player => player.name === playerName);
+            console.log('Voted player:', votedPlayer);
+            console.log('Player name received:', playerName);
             if (!votedPlayer) throw new Error('Voted player not found');
             votedPlayer.votes += 1;
         } 
