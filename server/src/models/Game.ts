@@ -11,7 +11,7 @@ export interface IGame extends Document {
     votes: number;
     alive: boolean;
   }[];
-  state: 'waiting' | 'card' |'round' | 'votes' | 'finished' | 'end';
+  state: 'waiting' | 'card' |'round' | 'votes' | 'end';
   content: {
     word?: string;
     hint?: string;
@@ -36,7 +36,7 @@ const gameSchema = new Schema<IGame>({
   }],
   state: { 
     type: String, 
-    enum: ['waiting', 'card', 'round', 'votes', 'finished', 'end'], 
+    enum: ['waiting', 'card', 'round', 'votes', 'end'], 
     default: 'waiting' 
   },  
   content: { word: String, hint: String },
