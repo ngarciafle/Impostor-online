@@ -50,6 +50,7 @@
         </div>
         {#if turn}
             <form on:submit={sendMessage}>
+                <div class="flex flex-row"></div>
                 <input type="text" name="word" placeholder="Enter a word" />
                 <button type="submit" class="flex gap-1 bg-background-secondary shadow shadow-foreground py-2 rounded-2xl hover:scale-105 transition-transform duration-300">Send</button>
             </form>

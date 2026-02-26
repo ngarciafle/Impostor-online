@@ -7,7 +7,7 @@ export function roundWordsSocket(io: Server, socket: Socket) {
   // Need to store inside the db the data && distribute word
   // Improve the logic and maybe move it to controllers ???? 
   socket.on('send-word', async ({ gameId, senderName, word }) => {
-    const { success, votePhase, nextPlayer } = await controlTurns(gameId, socket.id);
+    const { success, votePhase, nextPlayerSocket } = await controlTurns(gameId, socket.id);
     if (!success) {
       socket.emit('turn-result', { success: false, message: 'Error processing turn' });
       return;
@@ -18,6 +18,9 @@ export function roundWordsSocket(io: Server, socket: Socket) {
       // Fetch the players when entering to the voting phase
       const gameData = await Game.findOne({ gameId }).select('players');
       io.to(gameId).emit('get-players', { players: gameData?.players || [] });
+    } else {
+      // io.to(nextPlayerSocket).emit('turn-result', { success: true, message: "It's your turn!" });
+      //*** HOW TO SENT TO THE NEXT TURN OF WORD */
     }
 
 

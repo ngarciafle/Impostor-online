@@ -10,6 +10,7 @@ export interface IGame extends Document {
     turn: boolean;
     votes: number;
     alive: boolean;
+    hasVoted: boolean;
   }[];
   state: 'waiting' | 'card' |'round' | 'votes' | 'end';
   content: {
@@ -33,6 +34,7 @@ const gameSchema = new Schema<IGame>({
     turn: Boolean,
     votes: { type: Number, default: 0 },
     alive: { type: Boolean, default: true },
+    hasVoted: { type: Boolean, default: false },
   }],
   state: { 
     type: String, 

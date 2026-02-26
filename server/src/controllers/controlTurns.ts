@@ -10,9 +10,9 @@ export const controlTurns = async (gameId: string, socketId: string) => {
         if (!game.players[currentPlayerIndex].turn) throw new Error('Not your turn');
 
         let votePhase = false;
-        let nextIdx = currentPlayerIndex + 1;
+        let nextIdx = findNextPlayer(game, currentPlayerIndex);
         
-        if (currentPlayerIndex === game.players.length - 1) {
+        if (nextIdx === -1) {
             game.state = 'votes'; 
             votePhase = true;
             nextIdx = 0; // Reset to first player for voting phase
@@ -22,9 +22,21 @@ export const controlTurns = async (gameId: string, socketId: string) => {
         game.players[nextIdx].turn = true; // Decide whose turn is next
         
         await game.save();
-        return { success: true, votePhase, nextPlayer: game.players[nextIdx].socketId };
+        return { success: true, votePhase, nextPlayerSocket: game.players[nextIdx].socketId };
     } catch (err) {
         console.log('Error in controlTurns:', err);
         return { success: false };
     }
+}
+
+
+// Helper function to find the next alive player
+function findNextPlayer(game: any, currentIndex: number) {
+    let nextIdx = currentIndex + 1;
+    for (; nextIdx < game.players.length; nextIdx++) {
+        if (game.players[nextIdx].alive) {
+            return nextIdx;
+        }
+    }
+    return -1; // No alive players found
 }
