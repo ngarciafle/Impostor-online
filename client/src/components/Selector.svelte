@@ -54,7 +54,7 @@
 {:else if selection === 'votes'}
   <Voting socket={socket} bind:selection={selection} gameId={gameId} />
 {:else if selection === 'end'}
-  <End socket={socket} bind:selection={selection}/>
+  <End socket={socket} bind:selection={selection} gameId={gameId} />
 {/if}
 
 

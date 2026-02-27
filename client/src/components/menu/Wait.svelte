@@ -44,6 +44,10 @@
         });
     }
 
+    function returnToMenu() {
+        socket.emit("leave-game", { gameId });
+        selection = 'initial';
+    }
 </script>
 
 
@@ -70,7 +74,7 @@
 
     {/if}
 
-    <button on:click={() => selection = 'initial'} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>
+    <button on:click={returnToMenu} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>
 </div>
 
 <!-- {:else}
