@@ -18,6 +18,7 @@ export interface IGame extends Document {
     hint?: string;
   };
   chat: string[];
+  words: string[];
   votes: number;
   playersOut: number;
   numberOfImpostors?: number;
@@ -43,6 +44,7 @@ const gameSchema = new Schema<IGame>({
   },  
   content: { word: String, hint: String },
   chat: [String],
+  words: [String],
   votes: { type: Number, default: 0 },
   playersOut: { type: Number, default: 0 },
   numberOfImpostors: { type: Number, default: 0 },
