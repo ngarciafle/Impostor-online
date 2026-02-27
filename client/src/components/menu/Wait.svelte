@@ -1,6 +1,6 @@
 <script lang="ts">
     import { io, Socket } from "socket.io-client";
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
 
     export let name: string;
     export let gameId: string;
@@ -27,6 +27,11 @@
             word = data.word;
             selection = 'card';
         });
+    });
+
+    onDestroy(() => {
+        socket.off("player-joined");
+        socket.off("game-started");
     });
 
     async function startGame() {

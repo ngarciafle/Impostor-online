@@ -1,6 +1,6 @@
 <script lang="ts">
   import { io, type Socket } from "socket.io-client";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   export let socket: Socket;
   export let selection:
     | "initial"
@@ -33,6 +33,13 @@
     socket.on("vote-info", (data: string) => {
       result = data;
     });
+  });
+  
+  onDestroy(() => {
+    socket.off("get-players");
+    socket.off("round-ended");
+    socket.off("end-game");
+    socket.off("vote-info");
   });
 
   function sendVote(name: string | null) {

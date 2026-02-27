@@ -24,29 +24,6 @@
     }
   }
 
-  // import { onMount } from 'svelte';
-  // import { io, Socket } from "socket.io-client";
-
-  // export let selection: 'initial' | 'create' | 'join';
-
-  // let nombreJugador = "";
-  // let idSala = "";
-  // let unido = false;
-  // let socket: Socket;
-
-
-  // function unirseSala(evento: Event) {
-  //   evento.preventDefault(); 
-
-  //   if (!nombreJugador || !idSala) {
-  //       alert("Por favor, rellena todos los campos.");
-  //       return;
-  //   }
-
-  //   if (socket) {
-  //       socket.emit('join-game', idSala);
-  //   }
-  // }
 </script>
 
 <h1 class="text-2xl">Unirse a una partida🕹</h1>

@@ -51,4 +51,11 @@ const gameSchema = new Schema<IGame>({
   numberOfCrewmates: { type: Number, default: 0 },
 });
 
+gameSchema.post('save', async function(doc) {
+  if (doc.players.length === 0) {
+    await doc.deleteOne();
+    console.log(`Game ${doc.gameId} deleted due to no players remaining.`);
+  }
+})
+
 export default mongoose.model<IGame>('Game', gameSchema);

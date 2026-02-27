@@ -1,6 +1,6 @@
 <script lang="ts">
     import { io, type Socket } from "socket.io-client";
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     export let socket: Socket;
     export let gameId: string;
     export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
@@ -32,6 +32,13 @@
         })
 
         socket.emit('words-ready', { gameId }); // Notify server that the client is ready to receive the init-turn event
+    })
+    
+    onDestroy(() => {
+        socket.off("init-turn");
+        socket.off("turn-result");
+        socket.off("round-ended");
+        socket.off("new-word");
     })
 
     function sendMessage(event: Event) {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { io, type Socket } from "socket.io-client";
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
 
   import Initial from './menu/Initial.svelte';
   import Create from './menu/Create.svelte';
@@ -29,6 +29,14 @@
       socketId = socket.id;
     })
   });
+
+  onDestroy(() => {
+    if (socket) {
+      socket.disconnect();
+    }
+  })
+
+
 </script>
 
 {#if selection === 'initial'}

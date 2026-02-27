@@ -4,6 +4,7 @@ import { waitSocket } from "./wait";
 import { chatSocket } from "./chat";
 import { roundWordsSocket } from "./roundWords";
 import { socketVotes } from "./votes";
+import { deletePlayer } from "../controllers/deletePlayer";
 
 
 export function setUpSocket(io: Server) {
@@ -15,8 +16,9 @@ export function setUpSocket(io: Server) {
   roundWordsSocket(io, socket);
   socketVotes(io, socket);
 
-  socket.on('disconnect', () => {
+  socket.on('disconnect', async () => {
     console.log('User disconnected:', socket.id);
+    await deletePlayer(socket.data.gameId, socket.id);
   });
 });
 
