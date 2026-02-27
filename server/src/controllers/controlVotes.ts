@@ -76,5 +76,4 @@ function resetVotes(game: any) {
         player.votes = 0;
         player.hasVoted = false;
     });
-    game.save();
 }
