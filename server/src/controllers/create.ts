@@ -8,7 +8,7 @@ export const createGame = async (name: string, socketId: string) => {
   try {
     const newGame = new Game({
       gameId: gameId.toString(),
-      players: [{ socketId, name: name, leader: true, impostor: false, turn: false }],
+      players: [{ socketId, name: name, leader: true, impostor: false, turn: false, votes: 0, alive: true, hasVoted: false }],
       state: 'waiting',
     })
     await newGame.save();

@@ -3,7 +3,6 @@
     import { onMount } from 'svelte';
     export let socket: Socket;
     export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
-    export let gameId: string;
 
     onMount(() => {
         socket.on("game-info", (data) => {
@@ -12,7 +11,7 @@
     })
 
     function returnToMenu() {
-        socket.emit("leave-game", { gameId});
+        socket.emit("leave-game");
         selection = 'initial';
     }
 

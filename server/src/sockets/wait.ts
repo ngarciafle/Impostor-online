@@ -12,8 +12,10 @@ export function waitSocket(io: Server, socket: Socket) {
       return;
     }
 
-    const players = game.players.map(player => player.name);
+    const player = game.players.find(p => p.socketId === socket.id);    
+    socket.emit("leader-role", { leader: player?.leader || false });
 
+    const players = game.players.map(player => player.name);
     io.to(gameId).emit('player-joined', players);
     console.log(`${name} joined game ${gameId}`);
   });

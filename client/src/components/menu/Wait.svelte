@@ -14,7 +14,15 @@
     onMount(() => {
         socket.emit("join-game", { name, gameId });
 
+        socket.on("leader-role", (data) => {
+            leader = data.leader;
+        })
+
         socket.on("player-joined", (newPlayers) => {
+            players = newPlayers;
+        });
+
+        socket.on("player-left", (newPlayers) => {
             players = newPlayers;
         });
 
@@ -31,6 +39,7 @@
 
     onDestroy(() => {
         socket.off("player-joined");
+        socket.off("player-left");
         socket.off("game-started");
     });
 
@@ -45,7 +54,7 @@
     }
 
     function returnToMenu() {
-        socket.emit("leave-game", { gameId });
+        socket.emit("leave-game");
         selection = 'initial';
     }
 </script>
@@ -64,14 +73,13 @@
 
 
     {#if leader}
-    <div class="mt-8 p-4 border border-dashed border-gray-400 rounded-xl">
-        <p class="opacity-70 animate-pulse">Esperando a que el líder inicie la partida...</p>
-    </div>
-    {:else}
         <button on:click={startGame} class="mt-6 md:mt-8 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">
             Empezar partida
         </button>
-
+    {:else}
+        <div class="mt-8 p-4 border border-dashed border-gray-400 rounded-xl">
+            <p class="opacity-70 animate-pulse">Esperando a que el líder inicie la partida...</p>
+        </div>
     {/if}
 
     <button on:click={returnToMenu} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>

@@ -28,6 +28,10 @@
     socket.on("connect", () => {
       socketId = socket.id;
     })
+
+    socket.on("new-leader", (newLeader) => {
+      leader = true;
+    });
   });
 
   onDestroy(() => {
@@ -54,7 +58,7 @@
 {:else if selection === 'votes'}
   <Voting socket={socket} bind:selection={selection} gameId={gameId} />
 {:else if selection === 'end'}
-  <End socket={socket} bind:selection={selection} gameId={gameId} />
+  <End socket={socket} bind:selection={selection} />
 {/if}
 
 

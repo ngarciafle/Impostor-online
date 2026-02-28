@@ -18,6 +18,7 @@
     });
     const data = await response.json();
     if (data.success) {
+        gameId = data.gameId;
         selection = 'wait';
     } else {
         alert("Error al unirse a la sala.");
