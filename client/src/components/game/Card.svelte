@@ -1,6 +1,6 @@
 <script lang="ts">
     import { io, type Socket } from "socket.io-client";
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     export let socket: Socket;
     export let word: string;
     export let role: 'impostor' | 'crewmate';
@@ -11,6 +11,10 @@
         socket.on("round-started", () => {
             selection = 'words';
         })
+    })
+
+    onDestroy(() => {
+        socket.off("round-started");
     })
 </script>
 
