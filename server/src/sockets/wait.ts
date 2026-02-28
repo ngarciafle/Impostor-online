@@ -5,6 +5,7 @@ export function waitSocket(io: Server, socket: Socket) {
 
   socket.on('join-game', async ({name, gameId}) => {
     socket.join(gameId);
+    socket.data.gameId = gameId;
 
     const game = await Game.findOne({ gameId });
     if (!game) {

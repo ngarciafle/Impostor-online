@@ -5,6 +5,9 @@ export const deletePlayer = async (gameId: string, socketId: string) => {
         const game = await Game.findOne({ gameId });
         if (!game) throw new Error('Game not found');
         const playerIndex = game.players.findIndex(p => p.socketId === socketId);
+        console.log('Player index to delete:', playerIndex);
+        console.log('Current players before deletion:', game.players);
+        console.log('Socket ID to delete:', socketId);
         if (playerIndex === -1) throw new Error('Player not found in game');
 
         // Assign new leader if the leaving player is the leader

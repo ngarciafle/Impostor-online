@@ -6,8 +6,8 @@ import Game from "../models/Game";
 export const leaveGameSocket = async (io: Server, socket: Socket) => {
     socket.on('leave-game', async () => {
         try {
-            const game = await Game.findOne({ "players.socketId": socket.id });
-            if (!game) return; // Player was not in a 
+            const game = await Game.findOne({ gameId: socket.data.gameId });
+            if (!game) return; // Player was not in a game
             
             if (game.state === 'waiting') {
             game.players = game.players.filter(p => p.socketId !== socket.id);
@@ -22,6 +22,8 @@ export const leaveGameSocket = async (io: Server, socket: Socket) => {
             if (!data.newLeader) return; // If there are no more players in the game
     
             io.to(data.newLeader).emit('new-leader', data.leader); 
+            socket.leave(game.gameId);
+            socket.data.gameId = null;
         } catch (err) {
             console.error('Error leaving game:', err);
         }
