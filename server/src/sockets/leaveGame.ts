@@ -1,5 +1,4 @@
 import { Server, Socket } from "socket.io";
-import { controlVotes } from "../controllers/controlVotes";
 import { deletePlayer } from "../controllers/deletePlayer";
 import Game from "../models/Game";
 
@@ -9,19 +8,22 @@ export const leaveGameSocket = async (io: Server, socket: Socket) => {
             const game = await Game.findOne({ gameId: socket.data.gameId });
             if (!game) return; // Player was not in a game
             
-            if (game.state === 'waiting') {
-            game.players = game.players.filter(p => p.socketId !== socket.id);
-            await game.save();
-            io.to(game.gameId).emit('player-left', socket.id);
-            }
-    
             const data = await deletePlayer(game.gameId, socket.id);
-    
             if (!data) return; // Player was not found in the game
-            if (!data.leader) return; // If player was not leader
+
+            const updatedGame = await Game.findOne({ gameId: game.gameId });
+            if (updatedGame) {
+                io.to(game.gameId).emit('players-left', updatedGame.players.map(p => p.name));
+            }
+
+
             if (!data.newLeader) return; // If there are no more players in the game
-    
-            io.to(data.newLeader).emit('new-leader', data.leader); 
+            
+            io.to(game.gameId).emit('player-left', socket.id);
+            
+            if (data.leader) {
+                io.to(data.newLeader).emit('new-leader', data.leader); 
+            } 
             socket.leave(game.gameId);
             socket.data.gameId = null;
         } catch (err) {

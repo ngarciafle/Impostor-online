@@ -22,7 +22,7 @@
             players = newPlayers;
         });
 
-        socket.on("player-left", (newPlayers) => {
+        socket.on("players-left", (newPlayers) => {
             players = newPlayers;
         });
 
@@ -39,7 +39,7 @@
 
     onDestroy(() => {
         socket.off("player-joined");
-        socket.off("player-left");
+        socket.off("players-left");
         socket.off("game-started");
     });
 
