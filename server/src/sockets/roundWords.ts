@@ -1,6 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import { controlTurns } from '../controllers/controlTurns';
 import Game from '../models/Game';
+import { findNextTurnSocket } from '../controllers/findNextTurn';
 
 export function roundWordsSocket(io: Server, socket: Socket) {
   socket.on('words-ready', async ({ gameId }) => {
@@ -31,6 +32,10 @@ export function roundWordsSocket(io: Server, socket: Socket) {
     } else {
       // io.to(nextPlayerSocket).emit('init-turn', { success: true, message: "It's your turn!" });
       //*** HOW TO SENT TO THE NEXT TURN OF WORD */
+      const nextPlayerSocket = await findNextTurnSocket(gameId, socket.id);
+      if (!nextPlayerSocket) return { success: false, message: 'Next player not found' };
+
+      io.to(nextPlayerSocket).emit('init-turn', { success: true, message: "It's your turn!" });
     }
 
 
