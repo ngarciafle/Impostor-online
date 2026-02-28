@@ -11,6 +11,8 @@
   import Voting from "./game/Voting.svelte";
   import End from "./game/End.svelte";
 
+  import Chat from "./general/Chat.svelte";
+
   
   let role: 'impostor' | 'crewmate' = 'crewmate';
   let leader: boolean;
@@ -51,14 +53,18 @@
   <Join bind:selection bind:name bind:gameId bind:socketId/>
 {:else if selection === 'wait'}
   <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} />
+  <Chat socket={socket} gameId={gameId} name={name} />
 {:else if selection === 'card'}
   <Card word={word} role={role} socket={socket} bind:selection={selection}/>
 {:else if selection === 'words'}
   <Words socket={socket} bind:selection={selection} bind:words={words} gameId={gameId} name={name} />
+  <Chat socket={socket} gameId={gameId} name={name} />
 {:else if selection === 'votes'}
   <Voting socket={socket} bind:selection={selection} gameId={gameId} />
+  <Chat socket={socket} gameId={gameId} name={name} />
 {:else if selection === 'end'}
   <End socket={socket} bind:selection={selection} />
+  <Chat socket={socket} gameId={gameId} name={name} />
 {/if}
 
 
