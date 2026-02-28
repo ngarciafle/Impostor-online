@@ -8,9 +8,10 @@ interface gameRequest {
 }
 
 export const joinGameRoute = async (req: Request, res: Response) => {
-    const { socketId, name, gameId } = req.body as gameRequest;
+    const { socketId, gameId, name} = req.body as gameRequest;
     
     try {
+        console.log(`Player ${name} with socket ID ${socketId} is attempting to join game ${gameId}`);
         await joinGame(name, socketId, gameId);
         res.status(201).json({ message: 'Player joined game successfully', gameId, success: true });
     } catch (err) {

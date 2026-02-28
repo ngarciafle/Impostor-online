@@ -7,8 +7,9 @@
 
 
 
-  async function joinGame(event: Event) {
-    event.preventDefault();
+async function joinGame(event: Event) {
+  event.preventDefault();
+  try {
     const response = await fetch("http://localhost:3000/api/join-game", {
         method: "POST",
         headers: {
@@ -23,7 +24,11 @@
     } else {
         alert("Error al unirse a la sala.");
     }
+  } catch (error) {
+    console.error("Error joining game:", error);
+    alert("Error al unirse a la sala."); 
   }
+} 
 
 </script>
 
