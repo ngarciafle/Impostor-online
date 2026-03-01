@@ -7,6 +7,10 @@ export const socketVotes = async (io: Server, socket: Socket) => {
         const { gameId, playerName } = data;
         voteData = await controlVotes(gameId, playerName, socket.id);
 
+        // Send vote to all players to update the UI
+        io.to(gameId).emit('add-vote', playerName);
+
+
         if (voteData == null) return; // Not all players have voted yet
 
         io.to(gameId).emit('vote-result', voteData.vote);

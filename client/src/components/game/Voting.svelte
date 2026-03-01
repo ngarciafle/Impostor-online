@@ -26,6 +26,13 @@
       selection = "words";
     });
 
+    socket.on("add-vote", (name: string) => {
+      const player = players.find((p) => p.name === name);
+      if (player) {
+        player.votes += 1;
+      }
+    })
+
     socket.on("end-game", () => {
       selection = "end";
     });
@@ -62,7 +69,10 @@
           selectedPlayer = player.name;
           voted = true;
           sendVote(player.name);
-        }}>{player.name}</button
+        }}>
+          <p>{player.votes}</p>
+          {player.name}
+        </button
       >
     {/each}
 
