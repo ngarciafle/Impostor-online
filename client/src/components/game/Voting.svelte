@@ -19,7 +19,7 @@
 
   onMount(() => {
     socket.on("get-players", (data: any) => {
-      players = data.players;
+      players = data;
     });
 
     socket.on("round-ended", () => {
@@ -27,9 +27,11 @@
     });
 
     socket.on("add-vote", (name: string) => {
-      const player = players.find((p) => p.name === name);
-      if (player) {
-        player.votes += 1;
+      for (let player of players) {
+        if (player.name === name) {
+          player.votes += 1;
+          break;
+        }
       }
     })
 

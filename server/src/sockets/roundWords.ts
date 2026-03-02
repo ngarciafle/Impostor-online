@@ -28,10 +28,10 @@ export function roundWordsSocket(io: Server, socket: Socket) {
       io.to(gameId).emit('round-ended', { message: "Voting phase has started" });
       // Fetch the players when entering to the voting phase
       const gameData = await Game.findOne({ gameId }).select('players');
-      io.to(gameId).emit('get-players', { players: gameData?.players || [] });
+      const namesData = gameData?.players.map((player: any) => ({ name: player.name, votes: 0 })) || [];
+      io.to(gameId).emit('get-players', namesData);
     } else {
-      // io.to(nextPlayerSocket).emit('init-turn', { success: true, message: "It's your turn!" });
-      //*** HOW TO SENT TO THE NEXT TURN OF WORD */
+      // Find next turn and send init turn
       const nextPlayerSocket = await findNextTurnSocket(gameId, socket.id);
       if (!nextPlayerSocket) return { success: false, message: 'Next player not found' };
 
