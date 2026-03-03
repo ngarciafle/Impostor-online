@@ -32,7 +32,6 @@ export function roundWordsSocket(io: Server, socket: Socket) {
       io.to(gameId).emit('get-players', namesData);
     } else {
       // Find next turn and send init turn
-      const nextPlayerSocket = await findNextTurnSocket(gameId, socket.id);
       if (!nextPlayerSocket) return { success: false, message: 'Next player not found' };
 
       io.to(nextPlayerSocket).emit('init-turn', { success: true, message: "It's your turn!" });

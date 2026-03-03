@@ -15,7 +15,7 @@ export const socketVotes = async (io: Server, socket: Socket) => {
 
         io.to(gameId).emit('vote-result', voteData.vote);
 
-        new Promise((resolve) => setTimeout(resolve, 5000));
+        await new Promise((resolve) => setTimeout(resolve, 5000));
 
         // If the game has ended -> move to end and send info to show
         if (voteData.end) {
