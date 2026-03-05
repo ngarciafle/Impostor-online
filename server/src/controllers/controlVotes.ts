@@ -34,6 +34,7 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
 
         if (votedOutPlayers.length > 1) {
             resetVotes(game);
+            await game.save();
             return {end: false, vote: 'tie'}; // In case of a tie, no one is voted out
         }
 
