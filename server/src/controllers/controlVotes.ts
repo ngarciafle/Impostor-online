@@ -24,7 +24,8 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
 
         await game.save();
 
-        if (game.votes < game.players.length) return null; // Not all players have voted yet
+        const alivePlayers = game.players.filter((p: any) => p.alive).length;
+        if (game.votes < alivePlayers) return null; // Not all players have voted yet
         
 
         // Find the player with the most votes

@@ -23,6 +23,9 @@
     });
 
     socket.on("round-ended", () => {
+      voted = false;
+      selectedPlayer = null;
+      players = [];
       selection = "words";
     });
 
