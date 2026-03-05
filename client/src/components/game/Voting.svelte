@@ -27,12 +27,8 @@
     });
 
     socket.on("add-vote", (name: string) => {
-      for (let player of players) {
-        if (player.name === name) {
-          player.votes += 1;
-          break;
-        }
-      }
+      // Update the votes for the player
+      players = players.map((player) => player.name === name ? {...player, votes: player.votes + 1} : player);
     })
 
     socket.on("end-game", () => {
