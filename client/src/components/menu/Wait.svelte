@@ -10,6 +10,7 @@
     export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
     export let socket: Socket;
     let players: string[] = [];
+    export let words: string[] = [];
 
     onMount(() => {
         socket.emit("join-game", { name, gameId });

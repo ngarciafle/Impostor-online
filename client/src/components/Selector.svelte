@@ -52,7 +52,7 @@
 {:else if selection === 'join'}
   <Join bind:selection bind:name bind:gameId bind:socketId/>
 {:else if selection === 'wait'}
-  <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} />
+  <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} bind:words={words}/>
   <Chat socket={socket} gameId={gameId} name={name} />
 {:else if selection === 'card'}
   <Card word={word} role={role} socket={socket} bind:selection={selection}/>
