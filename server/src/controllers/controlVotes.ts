@@ -32,7 +32,10 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
         const maxVotes = Math.max(...game.players.map(player => player.votes));
         const votedOutPlayers = game.players.filter(player => player.votes === maxVotes);
 
-        if (votedOutPlayers.length > 1) return {end: false, vote: 'tie'}; // In case of a tie, no one is voted out
+        if (votedOutPlayers.length > 1) {
+            resetVotes(game);
+            return {end: false, vote: 'tie'}; // In case of a tie, no one is voted out
+        }
 
         const votedOutPlayer = votedOutPlayers[0];
         votedOutPlayer.alive = false;
