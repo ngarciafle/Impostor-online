@@ -82,3 +82,18 @@ function resetVotes(game: any) {
         player.hasVoted = false;
     });
 }
+
+export async function resetTurnsNewRound(gameId: string) {
+    const game = await Game.findOne({ gameId });
+    if (!game) throw new Error('Game not found');
+
+    game.players.forEach((p: any) => p.turn = false);
+
+    const firstAlive = game.players.find((p: any) => p.alive);
+    if (!firstAlive) return null;
+
+    firstAlive.turn = true;
+    await game.save();
+
+    return firstAlive.socketId;
+}
