@@ -4,7 +4,7 @@
     export let socket: Socket;
     export let gameId: string;
     export let name: string;
-    let messages: any[] = [];
+    export let messages: any[] = [];
     let messageInput: string = "";
 
     onMount(() => {
@@ -27,15 +27,17 @@
 </script>
 
 
-<div class="">
-    {#each messages as content}
-        <div class="flex flex-row gap-2 md:gap-3">
-        <p>{content.sender}:</p>
-        <p>{content.message}</p>
-        </div>
-    {/each}
+<div class="shadow rounded-2xl p-2 mb-4">
+    <div class="h-64 overflow-y-auto">
+        {#each messages as content}
+            <div class="flex flex-row gap-2 md:gap-3">
+            <p>{content.sender}:</p>
+            <p>{content.message}</p>
+            </div>
+        {/each}
+    </div>
 
-    <form on:submit={sendMessage} class="flex">
+    <form on:submit={sendMessage} class="flex bg-white">
         <input type="text" bind:value={messageInput} placeholder="Type your message..." class="flex-1 border rounded px-2 py-1" />
         <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-1 rounded">Mandar</button>
     </form>
