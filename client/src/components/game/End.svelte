@@ -3,10 +3,16 @@
     import { onMount } from 'svelte';
     export let socket: Socket;
     export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
+    export let gameId: string;
 
     onMount(() => {
         socket.on("game-info", (data) => {
             
+        })
+        socket.on("game-reset", (data) => {
+            alert(data.message);
+            selection = 'initial';
+
         })
     })
 
@@ -15,10 +21,17 @@
         selection = 'initial';
     }
 
+    function resetGame() {
+        socket.emit("reset-game", { gameId: gameId });
+    }
 </script>
 
 <p>game ended</p>
 
 <button on:click={returnToMenu} class="mt-6 md:mt-6">
     Volver al menu
+</button>
+
+<button on:click={resetGame} class="">
+    Reiniciar juego
 </button>

@@ -68,7 +68,7 @@
   <Voting socket={socket} bind:selection={selection} gameId={gameId} />
   <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
 {:else if selection === 'end'}
-  <End socket={socket} bind:selection={selection} />
+  <End socket={socket} bind:selection={selection} gameId={gameId}/>
   <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
 {/if}
 

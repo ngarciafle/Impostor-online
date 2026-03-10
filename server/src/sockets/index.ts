@@ -6,6 +6,7 @@ import { roundWordsSocket } from "./roundWords";
 import { socketVotes } from "./votes";
 import { deletePlayer } from "../controllers/deletePlayer";
 import { leaveGameSocket } from "./leaveGame";
+import { resetGameSocket } from "./resetGameSocket";
 
 export function setUpSocket(io: Server) {
   io.on('connection', (socket) => {
@@ -16,6 +17,7 @@ export function setUpSocket(io: Server) {
     roundWordsSocket(io, socket);
     socketVotes(io, socket);
     leaveGameSocket(io, socket);
+    resetGameSocket(io, socket);
 
     socket.on('disconnect', async () => {
       console.log('User disconnected:', socket.id);
