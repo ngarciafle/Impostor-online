@@ -35,6 +35,10 @@
     socket.on("new-leader", (newLeader) => {
       leader = true;
     });
+
+    socket.on("new-word", (data: any) => {
+      words = [...words, data];
+    })
   });
 
   onDestroy(() => {

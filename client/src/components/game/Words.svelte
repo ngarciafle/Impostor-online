@@ -26,10 +26,6 @@
         socket.on("round-ended", () => {
             selection = 'votes';
         })
-        
-        socket.on("new-word", (data: any) => {
-            words = [...words, data];
-        })
 
         socket.emit('words-ready', { gameId }); // Notify server that the client is ready to receive the init-turn event
     })
@@ -38,7 +34,6 @@
         socket.off("init-turn");
         socket.off("turn-result");
         socket.off("round-ended");
-        socket.off("new-word");
     })
 
     function sendMessage(event: Event) {
