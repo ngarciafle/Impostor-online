@@ -4,10 +4,18 @@
     export let socket: Socket;
     export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
     export let gameId: string;
+    let winner: boolean = false;
+    let role: string = '';
+    let whoWon: string = '';
+    let data: any;
 
     onMount(() => {
+        socket.emit("get-game-info", { gameId: gameId });
         socket.on("game-info", (data) => {
-            
+            data = data;
+            winner = data.winner === data.role;
+            role = data.role;
+            whoWon = data.winner;
         })
         socket.on("game-reset", (data) => {
             selection = 'wait';
@@ -23,6 +31,14 @@
         socket.emit("reset-game", { gameId: gameId });
     }
 </script>
+
+
+<h1 class={winner ? 'text-green-500' : 'text-red-500'}>
+    {role}
+</h1>
+<h3 class={winner ? 'text-green-500' : 'text-red-500'}>
+    {whoWon == 'impostors' ? 'Ganan los impostores!🙉' : 'Ganan los ciudadanos!🎉'}
+</h3>
 
 <p>game ended</p>
 

@@ -52,12 +52,13 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
         resetVotes(game);
 
         // End voting phase
-        let impostorWin: boolean  = false;
+        let impostorsWin: boolean  = false;
         
         // End game if nº impostors >= nº crewmates
         if (game.players.length - game.playersOut <= 2) {
             game.state = 'end';
-            impostorWin = true;
+            impostorsWin = true;
+            game.impostorsWin = true;
         }
 
         // End game if all impostors are out
@@ -68,7 +69,7 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
         
         await game.save();
 
-        return {end: game.state === 'end', vote: votedOutPlayer.name, impostorWin};
+        return {end: game.state === 'end', vote: votedOutPlayer.name, impostorsWin: game.impostorsWin};
 
     } catch (err) {
         console.log('Error in controlVotes:', err);

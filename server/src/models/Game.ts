@@ -23,6 +23,7 @@ export interface IGame extends Document {
   playersOut: number;
   numberOfImpostors?: number;
   numberOfCrewmates?: number;
+  impostorsWin?: boolean;
 }
 
 const gameSchema = new Schema<IGame>({
@@ -49,6 +50,7 @@ const gameSchema = new Schema<IGame>({
   playersOut: { type: Number, default: 0 },
   numberOfImpostors: { type: Number, default: 0 },
   numberOfCrewmates: { type: Number, default: 0 },
+  impostorsWin: { type: Boolean, default: false },
 });
 
 gameSchema.post('save', async function(doc) {

@@ -13,6 +13,7 @@ export const resetGame = async (gameId: string) => {
         game.numberOfImpostors = 0;
         game.numberOfCrewmates = 0;
         game.words = [];
+        game.impostorsWin = false;
         for (const player of game.players) {
             player.impostor = false;
             player.alive = true;
