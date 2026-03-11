@@ -10,9 +10,10 @@
     export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
     export let socket: Socket;
     let players: string[] = [];
-    export let words: string[] = [];
+    export let words: string[];
 
     onMount(() => {
+        words = [];
         socket.emit("join-game", { name, gameId });
 
         socket.on("leader-role", (data) => {

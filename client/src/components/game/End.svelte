@@ -10,9 +10,7 @@
             
         })
         socket.on("game-reset", (data) => {
-            alert(data.message);
-            selection = 'initial';
-
+            selection = 'wait';
         })
     })
 
