@@ -11,6 +11,7 @@
   import Voting from "./game/Voting.svelte";
   import End from "./game/End.svelte";
 
+  import OnWaitSeeImpostors from "./general/onWaitSeeImpostors.svelte";
   import Chat from "./general/Chat.svelte";
 
   
@@ -24,6 +25,7 @@
   let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end' = 'initial';
   let words: string[] = [];
   let messages: any[] = [];
+  let players: string[] = [];
 
 
   onMount(() => {
@@ -38,7 +40,16 @@
 
     socket.on("new-word", (data: any) => {
       words = [...words, data];
-    })
+    });
+
+    socket.on("player-joined", (newPlayers) => {
+        players = newPlayers;
+    });
+
+    socket.on("players-left", (newPlayers) => {
+        players = newPlayers;
+    });
+
   });
 
   onDestroy(() => {
@@ -61,17 +72,20 @@
 {/if}
 
 <div class="md:grid md:grid-cols-3 gap-4">
-  <div></div>
   {#if selection === 'wait'}
-    <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} bind:words={words}/>
-    <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
+  <OnWaitSeeImpostors players={players} />
+  <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} bind:words={words} players={players}/>
+  <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
   {:else if selection === 'words'}
+    <div></div>
     <Words socket={socket} bind:selection={selection} bind:words={words} gameId={gameId} name={name} />
     <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
   {:else if selection === 'votes'}
+    <div></div>
     <Voting socket={socket} bind:selection={selection} gameId={gameId} />
     <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
   {:else if selection === 'end'}
+    <div></div>
     <End socket={socket} bind:selection={selection} gameId={gameId}/>
     <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
   {/if}

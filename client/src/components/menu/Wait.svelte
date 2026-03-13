@@ -9,7 +9,7 @@
     export let word: string;
     export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
     export let socket: Socket;
-    let players: string[] = [];
+    export let players: string[] = [];
     export let words: string[];
 
     onMount(() => {
@@ -19,14 +19,6 @@
         socket.on("leader-role", (data) => {
             leader = data.leader;
         })
-
-        socket.on("player-joined", (newPlayers) => {
-            players = newPlayers;
-        });
-
-        socket.on("players-left", (newPlayers) => {
-            players = newPlayers;
-        });
 
         socket.on("game-started", (data) => {
             if (data.impostor) {
@@ -40,8 +32,6 @@
     });
 
     onDestroy(() => {
-        socket.off("player-joined");
-        socket.off("players-left");
         socket.off("game-started");
     });
 
