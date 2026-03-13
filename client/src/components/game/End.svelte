@@ -32,20 +32,21 @@
     }
 </script>
 
-
-<h1 class={winner ? 'text-green-500' : 'text-red-500'}>
-    {role}
-</h1>
-<h3 class={winner ? 'text-green-500' : 'text-red-500'}>
-    {whoWon == 'impostors' ? 'Ganan los impostores!🙉' : 'Ganan los ciudadanos!🎉'}
-</h3>
-
-<p>game ended</p>
-
-<button on:click={returnToMenu} class="mt-6 md:mt-6">
-    Volver al menu
-</button>
-
-<button on:click={resetGame} class="">
-    Reiniciar juego
-</button>
+<div class="flex flex-col gap-4 items-center h-full">
+    <h1 class={winner ? 'text-green-500' : 'text-red-300'}>
+        {role}
+    </h1>
+    <h3 class={winner ? 'text-green-500' : 'text-red-300'}>
+        {whoWon == 'impostors' ? 'Ganan los impostores!🙉' : 'Ganan los ciudadanos!🎉'}
+    </h3>
+    
+    
+    
+    <button on:click={returnToMenu} class="mt-6 md:mt-10 xl:mt-14 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-xl hover:scale-105 transition-transform duration-300">
+        Volver al menu
+    </button>
+    
+    <button on:click={resetGame} class="mt-4 md:mt-4 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-xl hover:scale-105 transition-transform duration-300">
+        Reiniciar juego
+    </button>
+</div>

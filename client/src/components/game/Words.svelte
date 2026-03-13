@@ -54,14 +54,13 @@
             {/each}
         </div>
         {#if turn}
-            <form on:submit={sendMessage}>
-                <div class="flex flex-row"></div>
-                <input type="text" name="word" placeholder="Enter a word" />
-                <button type="submit" class="flex gap-1 bg-background-secondary shadow shadow-foreground py-2 rounded-2xl hover:scale-105 transition-transform duration-300">Send</button>
+            <form on:submit={sendMessage} class="flex gap-2">
+                <input type="text" name="word" placeholder="Introduce una palabra" class="focus:outline-[.5px] rounded-xl"/>
+                <button type="submit" class="flex gap-1 bg-background-secondary shadow shadow-foreground py-2 rounded-xl hover:scale-105 transition-transform duration-300 aspect-4/3 ">Mandar</button>
             </form>
         {:else}
             <p class="text-center text-gray-500">Esperando tu turno...</p>
-            <p>Actual word</p> <!-- IDEA SHARE ACTUAL INPUT THROUGH SOCKETS-->
+            <!-- <p>Actual word</p> IDEA SHARE ACTUAL INPUT THROUGH SOCKETS -->
         {/if}
     </div>
 </div>

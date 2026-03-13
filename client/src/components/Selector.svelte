@@ -56,20 +56,24 @@
   <Create bind:selection bind:name bind:gameId bind:socketId/>
 {:else if selection === 'join'}
   <Join bind:selection bind:name bind:gameId bind:socketId/>
-{:else if selection === 'wait'}
-  <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} bind:words={words}/>
-  <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
 {:else if selection === 'card'}
   <Card word={word} role={role} socket={socket} bind:selection={selection}/>
-{:else if selection === 'words'}
-  <Words socket={socket} bind:selection={selection} bind:words={words} gameId={gameId} name={name} />
-  <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
-{:else if selection === 'votes'}
-  <Voting socket={socket} bind:selection={selection} gameId={gameId} />
-  <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
-{:else if selection === 'end'}
-  <End socket={socket} bind:selection={selection} gameId={gameId}/>
-  <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
 {/if}
 
+<div class="md:grid md:grid-cols-3 gap-4">
+  <div></div>
+  {#if selection === 'wait'}
+    <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} bind:words={words}/>
+    <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
+  {:else if selection === 'words'}
+    <Words socket={socket} bind:selection={selection} bind:words={words} gameId={gameId} name={name} />
+    <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
+  {:else if selection === 'votes'}
+    <Voting socket={socket} bind:selection={selection} gameId={gameId} />
+    <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
+  {:else if selection === 'end'}
+    <End socket={socket} bind:selection={selection} gameId={gameId}/>
+    <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
+  {/if}
+</div>
 
