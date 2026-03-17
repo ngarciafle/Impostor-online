@@ -9,6 +9,11 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
         if (!player) throw new Error('Player not found in game');
         if (player.hasVoted) throw new Error('Player already voted');
 
+        if (player.name === playerName) {
+            console.log('Player attempted to vote for themselves:', playerName);
+            return {end: false, vote: 'bad-vote'}; // Prevent voting for oneself
+        }
+
         player.hasVoted = true;
 
         game.votes += 1;
@@ -25,7 +30,7 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
         await game.save();
 
         const alivePlayers = game.players.filter((p: any) => p.alive).length;
-        if (game.votes < alivePlayers) return null; // Not all players have voted yet
+        if (game.votes < alivePlayers) return {vote: 'not-all-voted'}; // Not all players have voted yet
         
 
         // Find the player with the most votes
@@ -91,7 +96,7 @@ export async function resetTurnsNewRound(gameId: string) {
     game.players.forEach((p: any) => p.turn = false);
 
     const firstAlive = game.players.find((p: any) => p.alive);
-    if (!firstAlive) return null;
+    if (!firstAlive) return null; // No alive players, should not happen but just in case
 
     firstAlive.turn = true;
     await game.save();

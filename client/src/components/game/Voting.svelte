@@ -16,6 +16,7 @@
   let voted: boolean = false;
   export let gameId: string;
   let result: string;
+  export let name: string;
 
   onMount(() => {
     socket.on("get-players", (data: any) => {
@@ -41,6 +42,12 @@
     socket.on("vote-info", (data: string) => {
       result = data;
     });
+
+    // vote to yourself changing html -> reset the vote on backend
+    socket.on("bad-vote", () => {
+      voted = false;
+      selectedPlayer = null;
+    })
   });
   
   onDestroy(() => {
@@ -48,6 +55,7 @@
     socket.off("round-ended");
     socket.off("end-game");
     socket.off("vote-info");
+    socket.off("bad-vote");
   });
 
   function sendVote(name: string | null) {
@@ -66,8 +74,8 @@
   >
   {#each players as player}
   <button
-      class={"aspect-square bg-amber-100 shadow shadow-blue-700 w-10 md:w-12 rounded-xl" + (voted ? " bg-amber-400" : "") + (player.name === selectedPlayer ? "border-[.5px] border-e-emerald-900" : "")}
-      disabled={voted}
+      class={"aspect-square bg-amber-100 shadow shadow-blue-700 w-10 md:w-12 rounded-xl" + (voted ? " bg-amber-400" : "") + (player.name === selectedPlayer ? "border-[.5px] border-e-emerald-900/40" : "") + (player.name === name ? " border-[.5px] border-e-emerald-900/40" : "")}
+      disabled={voted || player.name === name}
       on:click={() => {
         selectedPlayer = player.name;
         voted = true;
@@ -80,7 +88,7 @@
         {/each}
         
         <button
-    class={"aspect-square bg-blue-300 shadow shadow-orange-950 w-10 md:w-12 rounded-xl" + (voted ? " bg-blue-800" : "") + (selectedPlayer === null ? " border-[.5px] border-e-emerald-900" : "")}
+    class={"aspect-square bg-blue-300 shadow shadow-orange-950 w-10 md:w-12 rounded-xl" + (voted ? " bg-blue-800/40" : "") + (selectedPlayer === null ? " border-[.5px] border-e-emerald-900/40" : "")}
     disabled={voted}
     on:click={() => {
       voted = true;
