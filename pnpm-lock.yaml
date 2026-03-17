@@ -22,6 +22,9 @@ importers:
       astro:
         specifier: ^5.17.1
         version: 5.17.2(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       lucide-svelte:
         specifier: ^0.564.0
         version: 0.564.0(svelte@5.51.2)

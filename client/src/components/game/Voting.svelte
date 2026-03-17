@@ -1,6 +1,7 @@
 <script lang="ts">
   import { io, type Socket } from "socket.io-client";
   import { onMount, onDestroy } from "svelte";
+  import clsx from "clsx";
   export let socket: Socket;
   export let selection:
     | "initial"
@@ -74,7 +75,7 @@
   >
   {#each players as player}
   <button
-      class={"aspect-square bg-amber-100 shadow shadow-blue-700 w-10 md:w-12 rounded-xl" + (voted ? " bg-amber-400" : "") + (player.name === selectedPlayer ? "border-[.5px] border-e-emerald-900/40" : "") + (player.name === name ? " border-[.5px] border-e-emerald-900/40" : "")}
+      class={clsx("aspect-square bg-amber-100 shadow shadow-blue-700 w-10 md:w-12 rounded-xl", voted && " bg-blue-800/40", player.name === selectedPlayer && " bg-green-200", player.name === name && " bg-amber-500/50 opacity-40", voted && selectedPlayer !== player.name && "opacity-40")}
       disabled={voted || player.name === name}
       on:click={() => {
         selectedPlayer = player.name;
@@ -88,7 +89,7 @@
         {/each}
         
         <button
-    class={"aspect-square bg-blue-300 shadow shadow-orange-950 w-10 md:w-12 rounded-xl" + (voted ? " bg-blue-800/40" : "") + (selectedPlayer === null ? " border-[.5px] border-e-emerald-900/40" : "")}
+    class={clsx("aspect-square bg-blue-800/40 shadow shadow-orange-950 w-10 md:w-12 rounded-xl", selectedPlayer === null && voted && " bg-green-200", voted && selectedPlayer !== null && "opacity-40")}
     disabled={voted}
     on:click={() => {
       voted = true;
