@@ -9,6 +9,8 @@ export const joinGame = async (name: string, socketId: string, gameId: string) =
     console.log(`Game found: ${game ? 'Yes' : 'No'}`);
     if (!game) throw new Error('Game not found');
 
+    if (game.players.length >= 12) throw new Error('Game is full');
+
     if (game.players.find((p: any) => p.name === name)) throw new Error('Name already taken in this game');
 
 
