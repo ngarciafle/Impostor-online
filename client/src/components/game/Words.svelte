@@ -1,16 +1,18 @@
 <script lang="ts">
     import { io, type Socket } from "socket.io-client";
     import { onMount, onDestroy } from 'svelte';
-    export let socket: Socket;
-    export let gameId: string;
-    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
-    let turn: boolean = false;
-    export let words: any[];
-    export let name: string;
+    let { socket, gameId, selection = $bindable(), words = $bindable(), name } = $props<{
+        socket: Socket;
+        gameId: string;
+        selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
+        words: any[];
+        name: string;
+    }>();
+    let turn: boolean = $state(false);
 
 
     onMount(() => {
-        socket.on("init-turn", (data) => {
+        socket.on("init-turn", (data: any) => {
             if (!data.success) return alert("Error: " + data.message);
             turn = true;
         }) 
@@ -26,8 +28,9 @@
         socket.on("round-ended", () => {
             selection = 'votes';
         })
-
+        
         socket.emit('words-ready', { gameId }); // Notify server that the client is ready to receive the init-turn event
+
     })
     
     onDestroy(() => {
@@ -45,7 +48,6 @@
     }
 </script>
 
-
 <div class="aspect-9/16 ">
     <div class="flex flex-col gap-2">
         <div class="flex flex-col overflow-x-auto scrollbar-thin">
@@ -54,7 +56,7 @@
             {/each}
         </div>
         {#if turn}
-            <form on:submit={sendMessage} class="flex gap-2">
+            <form onsubmit={sendMessage} class="flex gap-2">
                 <input type="text" name="word" placeholder="Introduce una palabra" class="focus:outline-[.5px] rounded-xl"/>
                 <button type="submit" class="flex gap-1 bg-background-secondary shadow shadow-foreground py-2 rounded-xl hover:scale-105 transition-transform duration-300 aspect-4/3 ">Mandar</button>
             </form>

@@ -71,7 +71,7 @@
   <Card word={word} role={role} socket={socket} bind:selection={selection}/>
 {/if}
 
-<div class="md:grid md:grid-cols-3 gap-4">
+<div class="mt-20 md:mt-30 xl:mt-40 md:grid md:grid-cols-3 gap-4">
   {#if selection === 'wait'}
   <OnWaitSeeImpostors players={players} />
   <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} bind:words={words} players={players}/>

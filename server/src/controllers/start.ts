@@ -43,25 +43,25 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
         await game.save();
 
         setTimeout(async () => {
-        game.state = 'round';
-        // Shuffle again to randomize turn order
-        const shuffledAgain = [...game.players];
-        for (let i = shuffledAgain.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffledAgain[i], shuffledAgain[j]] = [shuffledAgain[j], shuffledAgain[i]];
-        }   
+            game.state = 'round';
+            // Shuffle again to randomize turn order
+            const shuffledAgain = [...game.players];
+            for (let i = shuffledAgain.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledAgain[i], shuffledAgain[j]] = [shuffledAgain[j], shuffledAgain[i]];
+            }   
 
 
-        game.players = shuffledAgain;
-        game.players[0].turn = true; // Start with the first player
-        const firstPlayerSocketId = game.players[0].socketId;
+            game.players = shuffledAgain;
+            game.players[0].turn = true; // Start with the first player
+            const firstPlayerSocketId = game.players[0].socketId;
 
-        game.numberOfImpostors = numImpostors;
-        game.numberOfCrewmates = numPlayers - numImpostors;
+            game.numberOfImpostors = numImpostors;
+            game.numberOfCrewmates = numPlayers - numImpostors;
 
-        await game.save();
-        io.to(gameId).emit('round-started', { message: "Round has started" });
-    }, 10000)
+            await game.save();
+            io.to(gameId).emit('round-started', { message: "Round has started" });
+        }, 10000)
     } catch (error) {
         throw error;
     }
