@@ -36,8 +36,8 @@
   }
 </script>
 
-<h1 class="text-2xl">Crea una partida🕹</h1>
-<form on:submit={crearSala} class="flex gap-4 xl:gap-6 xl:mt-16 md:mt-10 mt-8 flex-col md:flex-row md:items-center">
+<h1 class="text-2xl mt-10 md:mt-16 xl:mt-20">Crea una partida🕹</h1>
+<form on:submit={crearSala} class="flex gap-4 xl:gap-6 mt-20 sm:mt-[8%] md:mt-[12%] flex-col md:flex-row md:items-center">
   <div class="flex md:flex-row flex-col gap-2">
     <label for="name">Nombre</label>
     <input type="text" bind:value={name} class="border border-foreground rounded-lg py-1 px-2" id="name">
