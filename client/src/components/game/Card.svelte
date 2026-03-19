@@ -37,8 +37,8 @@
 </script>
 
 
-<div class={"h-2  " + color} style={"width: " + pct + "%;"}>
-    <div class="w-full bg-green-500 transition-transform "></div>
+<div class="w-full">
+    <div class={"h-2 transition-transform " + color} style={"width: " + pct + "%;"}></div>
 </div>
 
 <h1 class="text-2xl md:text-3xl font-bold text-center mb-4">{role}</h1>
