@@ -2,6 +2,7 @@ import { Server, Socket } from 'socket.io';
 import { controlTurns } from '../controllers/controlTurns';
 import Game from '../models/Game';
 import { findNextTurnSocket } from '../controllers/findNextTurn';
+import { wordSchema } from '../utils/zod';
 
 export function roundWordsSocket(io: Server, socket: Socket) {
   socket.on('words-ready', async ({ gameId }) => {
@@ -18,6 +19,13 @@ export function roundWordsSocket(io: Server, socket: Socket) {
   // Need to store inside the db the data && distribute word
   // Improve the logic and maybe move it to controllers ???? 
   socket.on('send-word', async ({ gameId, senderName, word }) => {
+    const validatedData = wordSchema.safeParse({ word });
+
+    if (!validatedData.success) {
+        socket.emit('turn-result', { success: false, message: validatedData.error.flatten().fieldErrors });
+        return;
+    }
+
     const { success, votePhase, nextPlayerSocket } = await controlTurns(gameId, socket.id);
     if (!success) {
       socket.emit('turn-result', { success: false, message: 'Error processing turn' });

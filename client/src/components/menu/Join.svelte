@@ -8,7 +8,7 @@
 
 
   let { name = $bindable(), gameId = $bindable(), selection = $bindable(), socketId = $bindable() }: JoinGameProps = $props();
-  let error: any = $state("");
+  let error: any = $state({message: "", name: "", gameId: ""});
 
 
 
@@ -27,11 +27,13 @@ async function joinGame(event: Event) {
         gameId = data.gameId;
         selection = 'wait';
     } else {
-        error = data.message || "Error al unirse a la sala.";
+        error.message = data.message || "Error al unirse a la sala.";
+        error.name = data.errors?.name ? data.errors.name[0] : "";
+        error.gameId = data.errors?.gameId ? data.errors.gameId[0] : "";
     }
   } catch (err) {
     console.error("Error joining game:", err);
-    error = err instanceof Error ? err.message : "Error de conexión. Intenta de nuevo.";
+    error.message = err instanceof Error ? err.message : "Error de conexión. Intenta de nuevo.";
   }
 } 
 
@@ -42,14 +44,20 @@ async function joinGame(event: Event) {
   <div class="grid grid-cols-[1fr_2fr] grid-rows-2 gap-2">
     <label for="name">Nombre</label>
     <input type="text" bind:value={name} class="border border-foreground rounded-lg py-1 px-2" id="name">
-
+    {#if error.name}
+      <p class="text-red-400 col-span-2 text-sm">{error.name}</p>
+    {/if}
+    
     <label for="id">ID del juego</label>
     <input type="text" bind:value={gameId} class="border border-foreground rounded-lg py-1 px-2" placeholder="Ej: 1234" id="id">
+    {#if error.gameId}
+      <p class="text-red-400 col-span-2 text-sm">{error.gameId}</p>
+    {/if}
   </div>
 
   <button type="submit" class="mt-4 md:mt-0 bg-green-100/40 shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Unirse</button>
 </form>
-{#if error}
-  <p class="text-red-500 mt-4">{error}</p>
+{#if error && !error.gameId}
+  <p class="text-red-400 mt-4">{error.message}</p>
 {/if}
 <button onclick={() => selection = 'initial'} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>

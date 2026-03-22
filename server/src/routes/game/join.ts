@@ -1,5 +1,6 @@
 import { Response, Request } from 'express';
 import { joinGame } from '../../controllers/join';
+import { joinSchema } from '../../utils/zod';
 
 interface gameRequest {
     socketId: string;
@@ -10,6 +11,12 @@ interface gameRequest {
 export const joinGameRoute = async (req: Request, res: Response) => {
     const { socketId, gameId, name} = req.body as gameRequest;
     
+    const validatedData = joinSchema.safeParse({ socketId, gameId, name });
+
+    if (!validatedData.success) {
+        return res.status(400).json({ message: "Error al unirse a la sala", success: false, errors: validatedData.error.flatten().fieldErrors });
+    }
+
     try {
         console.log(`Player ${name} with socket ID ${socketId} is attempting to join game ${gameId}`);
         await joinGame(name, socketId, gameId);

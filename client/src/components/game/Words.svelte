@@ -9,6 +9,7 @@
         name: string;
     }>();
     let turn: boolean = $state(false);
+    let error: string = $state("");
 
 
     onMount(() => {
@@ -21,7 +22,8 @@
             if (data.success) {
                 turn = false;
             } else {
-                alert("Error: " + data.message);
+                console.error("Error in turn result:", data.message);
+                error = data.message;
             }
         })
         
@@ -58,6 +60,9 @@
         {#if turn}
             <form onsubmit={sendMessage} class="flex gap-2">
                 <input type="text" name="word" placeholder="Introduce una palabra" class="focus:outline-[.5px] rounded-xl"/>
+                {#if error}
+                    <p class="text-red-500 text-sm">{error}</p>
+                {/if}
                 <button type="submit" class="flex gap-1 bg-background-secondary shadow shadow-foreground py-2 rounded-xl hover:scale-105 transition-transform duration-300 aspect-4/3 ">Mandar</button>
             </form>
         {:else}

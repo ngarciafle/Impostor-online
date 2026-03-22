@@ -1,9 +1,14 @@
 <script lang="ts">
-  export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
+  interface CreateGameProps {
+    name: string;
+    gameId: string;
+    selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
+    socketId: string | undefined;
+  }
 
-  export let name: string = "";
-  export let gameId: string = "";
-  export let socketId: string | undefined;
+  let { name = $bindable(), gameId = $bindable(), selection = $bindable(), socketId = $bindable() }: CreateGameProps = $props();
+  let error: any = $state({message: "", name: ""});
+
 
   async function crearSala(evento: Event) {
     evento.preventDefault();
@@ -31,18 +36,28 @@
       gameId = data.gameId;
       selection = 'wait';
     } else {
-      alert("Error al crear la sala.");
+      error.message = data.message || "Error al crear la sala.";
+      error.name = data.errors?.name ? data.errors.name[0] : "";
+      error.gameId = data.errors?.gameId ? data.errors.gameId[0] : "";
     }
   }
 </script>
 
 <h1 class="text-2xl mt-10 md:mt-16 xl:mt-20">Crea una partida🕹</h1>
-<form on:submit={crearSala} class="flex gap-4 xl:gap-6 mt-20 sm:mt-[8%] md:mt-[12%] flex-col md:flex-row md:items-center">
-  <div class="flex md:flex-row flex-col gap-2">
-    <label for="name">Nombre</label>
-    <input type="text" bind:value={name} class="border border-foreground rounded-lg py-1 px-2" id="name">
-  </div>
-
-  <button type="submit" class="mt-4 md:mt-0 bg-green-100/50 shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Crear</button>
-</form>
-<button on:click={() => selection = 'initial'} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>
+<div class="mt-20 sm:mt-[8%] md:mt-[12%] items-center flex flex-col">
+  {#if error.name}
+    <p class="text-red-400">{error.name}</p>
+  {/if}
+  <form onsubmit={crearSala} class="flex gap-4 xl:gap-6 mt-4 flex-col md:flex-row md:items-center">
+    <div class="flex md:flex-row flex-col gap-2">
+      <label for="name">Nombre</label>
+      <input type="text" bind:value={name} class="border border-foreground rounded-lg py-1 px-2" id="name">
+    </div>
+  
+    <button type="submit" class="mt-4 md:mt-0 bg-green-100/50 shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Crear</button>
+  </form>
+  {#if error && !error.name}
+    <p class="text-red-400 mt-4">{error.message}</p>
+  {/if}
+</div>
+<button onclick={() => selection = 'initial'} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>
