@@ -7,15 +7,13 @@
     let winner: boolean = false;
     let role: string = '';
     let whoWon: string = '';
-    let data: any;
 
     onMount(() => {
         socket.emit("get-game-info", { gameId: gameId });
-        socket.on("game-info", (data) => {
-            data = data;
-            winner = data.winner === data.role;
-            role = data.role;
-            whoWon = data.winner;
+        socket.on("game-info", (gameResults: any) => {
+            winner = gameResults.winner === gameResults.role;
+            role = gameResults.role;
+            whoWon = gameResults.winner;
         })
         socket.on("game-reset", (data) => {
             selection = 'wait';
@@ -33,10 +31,10 @@
 </script>
 
 <div class="flex flex-col gap-4 items-center h-full">
-    <h1 class={winner ? 'text-green-500' : 'text-red-300'}>
-        {role}
+    <h1 class={winner ? 'text-green-500' : 'text-red-300' + " text-2xl md:text-4xl xl:text-5xl mt-10 md:mt-16 xl:mt-20"}>
+        {role === 'impostor' ? 'Impostor' : 'Ciudadano'}
     </h1>
-    <h3 class={winner ? 'text-green-500' : 'text-red-300'}>
+    <h3 class={winner ? 'text-green-500' : 'text-red-300' + " text-lg md:text-2xl xl:text-3xl"}>
         {whoWon == 'impostors' ? 'Ganan los impostores!🙉' : 'Ganan los ciudadanos!🎉'}
     </h3>
     

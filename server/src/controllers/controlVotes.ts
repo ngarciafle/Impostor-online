@@ -60,7 +60,7 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
         let impostorsWin: boolean  = false;
         
         // End game if nº impostors >= nº crewmates
-        if (game.players.length - game.playersOut <= 2) {
+        if (game.numberOfCrewmates! <= game.numberOfImpostors!) {
             game.state = 'end';
             impostorsWin = true;
             game.impostorsWin = true;
@@ -69,6 +69,7 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
         // End game if all impostors are out
         if (game.numberOfImpostors === 0) {
             game.state = 'end';
+            game.impostorsWin = false;
         }
 
         

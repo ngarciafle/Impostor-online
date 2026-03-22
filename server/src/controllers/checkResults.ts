@@ -10,7 +10,7 @@ export const checkResults = async (gameId: string) => {
         const impostors = game.players.filter((p: any) => p.impostor).map((p: any) => p.socketId);
         const crewmates = game.players.filter((p: any) => !p.impostor).map((p: any) => p.socketId);
 
-        return { impostors, crewmates, winner: game.impostorsWin ? 'impostors' : 'crewmates' };
+        return { impostors, crewmates, winner: game.impostorsWin ? 'impostor' : 'crewmate' };
     } catch (error) {
         console.error('Error checking results:', error);
         throw error;
