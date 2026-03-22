@@ -1,9 +1,14 @@
 <script lang="ts">
-  import { io, type Socket } from "socket.io-client";
-  export let name: string = "";
-  export let gameId: string = "";
-  export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
-  export let socketId: string | undefined;
+  interface JoinGameProps {
+    name: string;
+    gameId: string;
+    selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
+    socketId: string | undefined;
+  }
+
+
+  let { name = $bindable(), gameId = $bindable(), selection = $bindable(), socketId = $bindable() }: JoinGameProps = $props();
+  let error: any = $state("");
 
 
 
@@ -22,18 +27,18 @@ async function joinGame(event: Event) {
         gameId = data.gameId;
         selection = 'wait';
     } else {
-        alert("Error al unirse a la sala.");
+        error = data.message || "Error al unirse a la sala.";
     }
-  } catch (error) {
-    console.error("Error joining game:", error);
-    alert("Error al unirse a la sala."); 
+  } catch (err) {
+    console.error("Error joining game:", err);
+    error = err instanceof Error ? err.message : "Error de conexión. Intenta de nuevo.";
   }
 } 
 
 </script>
 
 <h1 class="text-2xl mt-10 md:mt-16 xl:mt-20">Unirse a una partida🕹</h1>
-<form on:submit={joinGame} class="flex gap-2 xl:gap-6 mt-20 sm:mt-[8%] md:mt-[12%] flex-col md:flex-row md:items-center">
+<form onsubmit={joinGame} class="flex gap-2 xl:gap-6 mt-20 sm:mt-[8%] md:mt-[12%] flex-col md:flex-row md:items-center">
   <div class="grid grid-cols-[1fr_2fr] grid-rows-2 gap-2">
     <label for="name">Nombre</label>
     <input type="text" bind:value={name} class="border border-foreground rounded-lg py-1 px-2" id="name">
@@ -44,4 +49,7 @@ async function joinGame(event: Event) {
 
   <button type="submit" class="mt-4 md:mt-0 bg-green-100/40 shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Unirse</button>
 </form>
-<button on:click={() => selection = 'initial'} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>
+{#if error}
+  <p class="text-red-500 mt-4">{error}</p>
+{/if}
+<button onclick={() => selection = 'initial'} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>
