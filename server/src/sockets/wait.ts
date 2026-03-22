@@ -12,6 +12,11 @@ export function waitSocket(io: Server, socket: Socket) {
       console.error(`Game with ID ${gameId} not found`);
       return;
     }
+    
+    if (game.state !== 'waiting') {
+      console.error(`Game with ID ${gameId} is not in waiting state`);
+      return;
+    }
 
     const player = game.players.find(p => p.socketId === socket.id);    
     socket.emit("leader-role", { leader: player?.leader || false });

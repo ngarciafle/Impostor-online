@@ -5,7 +5,10 @@ import { resetTurnsNewRound } from "../controllers/controlVotes";
 export const socketVotes = async (io: Server, socket: Socket) => {
     let voteData: any;
     socket.on('send-vote', async (data) => {
-        const { gameId, playerName } = data;
+        const playerName = data.playerName;
+        const gameId = socket.data.gameId;
+        if (!gameId) return;
+
         voteData = await controlVotes(gameId, playerName, socket.id);
 
         if (voteData.vote === 'bad-vote') {

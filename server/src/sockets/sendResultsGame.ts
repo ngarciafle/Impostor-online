@@ -2,7 +2,10 @@ import { Server, Socket } from "socket.io";
 import { checkResults } from "../controllers/checkResults";
 
 export const sendResultsGameSocket = async (io: Server, socket: Socket) => {
-    socket.on("get-game-info", async ({ gameId }) => {
+    socket.on("get-game-info", async ({ }) => {
+        const gameId = socket.data.gameId;
+        if (!gameId) return;
+
         try {
             const { impostors, crewmates, winner } = await checkResults(gameId);
 

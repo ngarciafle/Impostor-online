@@ -5,7 +5,10 @@ import { findNextTurnSocket } from '../controllers/findNextTurn';
 import { wordSchema } from '../utils/zod';
 
 export function roundWordsSocket(io: Server, socket: Socket) {
-  socket.on('words-ready', async ({ gameId }) => {
+  socket.on('words-ready', async ({ }) => {
+    const gameId = socket.data.gameId;
+    if (!gameId) return;
+    
     const data = await Game.findOne({ gameId });
     if (!data) return;
 

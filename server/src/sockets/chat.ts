@@ -2,7 +2,11 @@ import { Server, Socket } from 'socket.io';
 import { saveChat } from '../controllers/saveChat';
 
 export function chatSocket(io: Server, socket: Socket) {
-    socket.on('send-message', ({ gameId, senderName, message }) => {
+    socket.on('send-message', ({ senderName, message }) => {
+    const gameId = socket.data.gameId;
+    if (!gameId) return;
+
+    
     io.to(gameId).emit('new-message', {
       sender: senderName,
       message: message,
