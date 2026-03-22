@@ -3,7 +3,7 @@ import Game from '../models/Game';
 
 
 export const createGame = async (name: string, socketId: string) => {
-  const gameId = Math.floor(Math.random() * 10000);
+  const gameId = (Math.floor(Math.random() * 9000) + 1000).toString(); // Generate a random 4-digit game ID
   //const { word, hint} = Importar la palabra y pista desde el contenedor de palabras
   try {
     const newGame = new Game({
