@@ -1,4 +1,5 @@
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { connectDB }  from './config/db';
@@ -14,6 +15,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Create limiter 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: "Error: Demasiadas solicitudes."
+});
+
+// Apply limiter to all requests
+app.use(limiter);
 
 const server = createServer(app);
 const io = new Server(server, {
