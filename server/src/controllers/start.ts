@@ -12,6 +12,8 @@ export const startGame = async (gameId: string, socketId: string, io: Server) =>
         const player = game.players.find(p => p.socketId === socketId);
         if (!player) throw new Error('Player not found in game');
         if (!player.leader) throw new Error('Unable to start game, player is not the leader');
+        if (game.state !== 'waiting') throw new Error('Game has already started');
+        // if (game.players.length < 3) throw new Error('At least 3 players are required to start the game');
 
         const randomIdx = Math.floor(Math.random() * content.length);
         const { word, hint } = content[randomIdx];
