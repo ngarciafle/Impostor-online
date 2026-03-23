@@ -1,11 +1,19 @@
 import { Server, Socket } from "socket.io";
 import { controlVotes } from "../controllers/controlVotes";
 import { resetTurnsNewRound } from "../controllers/controlVotes";
+import { voteSchema } from "../utils/zod";
 
 export const socketVotes = async (io: Server, socket: Socket) => {
     let voteData: any;
     socket.on('send-vote', async (data) => {
-        const playerName = data.playerName;
+        const validatedData = voteSchema.safeParse({ playerName: data.playerName });
+
+        if (!validatedData.success) {
+            socket.emit('turn-result', { success: false, message: validatedData.error.flatten().fieldErrors });
+            return;
+        }
+
+        const playerName = validatedData.data.playerName;
         const gameId = socket.data.gameId;
         if (!gameId) return;
 

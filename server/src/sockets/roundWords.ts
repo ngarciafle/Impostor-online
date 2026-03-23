@@ -1,7 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { controlTurns } from '../controllers/controlTurns';
 import Game from '../models/Game';
-import { findNextTurnSocket } from '../controllers/findNextTurn';
 import { wordSchema } from '../utils/zod';
 
 export function roundWordsSocket(io: Server, socket: Socket) {

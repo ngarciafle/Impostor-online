@@ -1,11 +1,18 @@
 import { Server, Socket } from 'socket.io';
 import { saveChat } from '../controllers/saveChat';
+import { messageSchema } from '../utils/zod';
 
 export function chatSocket(io: Server, socket: Socket) {
     socket.on('send-message', ({ senderName, message }) => {
     const gameId = socket.data.gameId;
     if (!gameId) return;
+    
+    const validation = messageSchema.safeParse({ senderName, message });
 
+    if (!validation.success) {
+      console.error('Validation error:', validation.error);
+      return;
+    }
     
     io.to(gameId).emit('new-message', {
       sender: senderName,
