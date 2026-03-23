@@ -4,6 +4,7 @@
     export let socket: Socket;
     export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
     export let gameId: string;
+    export let leader: boolean = false;
     let winner: boolean = false;
     let role: string = '';
     let whoWon: string = '';
@@ -44,7 +45,9 @@
         Volver al menu
     </button>
     
-    <button on:click={resetGame} class="mt-4 md:mt-4 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-xl hover:scale-105 transition-transform duration-300">
-        Reiniciar juego
-    </button>
+    {#if leader}
+        <button on:click={resetGame} class="mt-4 md:mt-4 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-xl hover:scale-105 transition-transform duration-300">
+            Reiniciar juego
+        </button>
+    {/if}
 </div>
