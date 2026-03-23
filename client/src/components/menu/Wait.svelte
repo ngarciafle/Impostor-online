@@ -2,15 +2,19 @@
     import { io, Socket } from "socket.io-client";
     import { onMount, onDestroy } from 'svelte';
 
-    export let name: string;
-    export let gameId: string;
-    export let leader: boolean;
-    export let role: 'impostor' | 'crewmate';
-    export let word: string;
-    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
-    export let socket: Socket;
-    export let players: string[] = [];
-    export let words: string[];
+    interface WaitProps {
+        name: string;
+        gameId: string;
+        leader: boolean;
+        role: 'impostor' | 'crewmate';
+        word: string;
+        selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
+        socket: Socket;
+        players: string[];
+        words: string[];
+    }
+
+    let { name = $bindable(), gameId = $bindable(), leader = $bindable(), role = $bindable(), word = $bindable(), selection = $bindable(), socket, players, words = $bindable() }: WaitProps = $props();
 
     onMount(() => {
         words = [];

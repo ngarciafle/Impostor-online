@@ -1,6 +1,7 @@
 <script lang="ts">
     import { io, type Socket } from "socket.io-client";
     import { onMount, onDestroy } from 'svelte';
+    
     let { socket, gameId, selection = $bindable(), words = $bindable(), name } = $props<{
         socket: Socket;
         gameId: string;

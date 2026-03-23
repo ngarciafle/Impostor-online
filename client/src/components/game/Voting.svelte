@@ -2,22 +2,28 @@
   import { io, type Socket } from "socket.io-client";
   import { onMount, onDestroy } from "svelte";
   import clsx from "clsx";
-  export let socket: Socket;
-  export let selection:
-    | "initial"
-    | "create"
-    | "join"
-    | "wait"
-    | "card"
-    | "words"
-    | "votes"
-    | "end";
-  let players: any[] = [];
-  let selectedPlayer: string | null = null;
-  let voted: boolean = false;
-  export let gameId: string;
-  let result: string;
-  export let name: string;
+
+  interface VotingProps {
+    socket: Socket;
+    selection:
+      | "initial"
+      | "create"
+      | "join"
+      | "wait"
+      | "card"
+      | "words"
+      | "votes"
+      | "end";
+    gameId: string;
+    name: string;
+  }
+
+  let { socket, selection = $bindable(), gameId, name }: VotingProps = $props();
+
+  let players: any[] = $state([]);
+  let selectedPlayer: string | null = $state(null);
+  let voted: boolean = $state(false);
+  let result: string = $state("");
 
   onMount(() => {
     socket.on("get-players", (data: any) => {
@@ -77,7 +83,7 @@
   <button
       class={clsx("aspect-square bg-amber-100 shadow shadow-blue-700 w-10 md:w-12 rounded-xl", voted && " bg-blue-800/40", player.name === selectedPlayer && " bg-green-200", player.name === name && " bg-amber-500/50 opacity-40", voted && selectedPlayer !== player.name && "opacity-40")}
       disabled={voted || player.name === name}
-      on:click={() => {
+      onclick={() => {
         selectedPlayer = player.name;
         voted = true;
         sendVote(player.name);
@@ -91,7 +97,7 @@
         <button
     class={clsx("aspect-square bg-blue-800/40 shadow shadow-orange-950 w-10 md:w-12 rounded-xl", selectedPlayer === null && voted && " bg-green-200", voted && selectedPlayer !== null && "opacity-40")}
     disabled={voted}
-    on:click={() => {
+    onclick={() => {
       voted = true;
       sendVote(null);
     }}>

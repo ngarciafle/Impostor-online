@@ -1,13 +1,19 @@
 <script lang="ts">
     import { io, type Socket } from "socket.io-client";
     import { onMount } from 'svelte';
-    export let socket: Socket;
-    export let selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
-    export let gameId: string;
-    export let leader: boolean = false;
-    let winner: boolean = false;
-    let role: string = '';
-    let whoWon: string = '';
+
+    interface EndProps {
+        socket: Socket;
+        selection: 'initial' | 'create' | 'join' | 'wait' | 'card' | 'words' | 'votes' | 'end';
+        gameId: string;
+        leader: boolean;
+    }
+
+    let { socket, selection = $bindable(), gameId, leader }: EndProps = $props();
+
+    let winner: boolean = $state(false);
+    let role: string = $state('');
+    let whoWon: string = $state('');
 
     onMount(() => {
         socket.emit("get-game-info", { gameId: gameId });
@@ -41,12 +47,12 @@
     
     
     
-    <button on:click={returnToMenu} class="mt-6 md:mt-10 xl:mt-14 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-xl hover:scale-105 transition-transform duration-300">
+    <button onclick={returnToMenu} class="mt-6 md:mt-10 xl:mt-14 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-xl hover:scale-105 transition-transform duration-300">
         Volver al menu
     </button>
     
     {#if leader}
-        <button on:click={resetGame} class="mt-4 md:mt-4 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-xl hover:scale-105 transition-transform duration-300">
+        <button onclick={resetGame} class="mt-4 md:mt-4 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-xl hover:scale-105 transition-transform duration-300">
             Reiniciar juego
         </button>
     {/if}

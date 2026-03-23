@@ -6,7 +6,6 @@
     socketId: string | undefined;
   }
 
-
   let { name = $bindable(), gameId = $bindable(), selection = $bindable(), socketId = $bindable() }: JoinGameProps = $props();
   let error: any = $state({message: "", name: "", gameId: ""});
 

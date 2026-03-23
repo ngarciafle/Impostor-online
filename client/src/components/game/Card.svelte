@@ -1,12 +1,8 @@
 <script lang="ts">
   import { io, type Socket } from "socket.io-client";
   import { onMount, onDestroy } from "svelte";
-  let {
-    socket,
-    selection = $bindable(),
-    word,
-    role,
-  } = $props<{
+
+  interface CardProps {
     socket: Socket;
     selection:
       | "initial"
@@ -19,7 +15,14 @@
       | "end";
     word: string;
     role: "impostor" | "crewmate";
-  }>();
+  }
+
+  let {
+    socket,
+    selection = $bindable(),
+    word,
+    role,
+  }: CardProps = $props();
 
   let show: boolean = $state(false);
   // 9 because of delay 

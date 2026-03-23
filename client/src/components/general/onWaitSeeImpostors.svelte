@@ -2,7 +2,7 @@
     import { Socket } from 'socket.io-client';
     import { onMount } from 'svelte';
 
-    export let players: string[];
+    let { players = $bindable() }: { players: string[] } = $props();
 
     onMount(async () => {
         

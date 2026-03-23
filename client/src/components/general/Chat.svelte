@@ -1,10 +1,8 @@
 <script lang="ts">
     import { io, type Socket } from "socket.io-client";
     import { onMount, onDestroy } from 'svelte';
-    export let socket: Socket;
-    export let gameId: string;
-    export let name: string;
-    export let messages: any[] = [];
+
+    let { socket = $bindable(), gameId = $bindable(), name = $bindable(), messages = $bindable() }: { socket: Socket, gameId: string, name: string, messages: any[] } = $props();
     let messageInput: string = "";
 
     onMount(() => {
@@ -37,7 +35,7 @@
         {/each}
     </div>
 
-    <form on:submit={sendMessage} class="flex bg-white mt-1">
+    <form onsubmit={sendMessage} class="flex bg-white mt-1">
         <input type="text" bind:value={messageInput} placeholder="Type your message..." class="flex-1 border rounded px-2 py-1" />
         <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-1 rounded">Mandar</button>
     </form>
