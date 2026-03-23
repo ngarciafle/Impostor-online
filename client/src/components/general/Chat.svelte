@@ -3,7 +3,7 @@
     import { onMount, onDestroy } from 'svelte';
 
     let { socket = $bindable(), gameId = $bindable(), name = $bindable(), messages = $bindable() }: { socket: Socket, gameId: string, name: string, messages: any[] } = $props();
-    let messageInput: string = "";
+    let messageInput: string = $state("");
 
     onMount(() => {
         socket.on("new-message", (data) => {
