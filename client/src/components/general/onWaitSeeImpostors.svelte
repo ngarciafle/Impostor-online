@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Socket } from 'socket.io-client';
     import { onMount } from 'svelte';
+    import clsx from 'clsx';
 
     let { players = $bindable() }: { players: string[] } = $props();
 
@@ -12,8 +13,12 @@
 
 <div>
     <h3>Impostors: {Math.floor(players.length / 4) + 1}</h3>
-    <div class="relative flex justify-center items-center">
-        <div class="bg-green-300 w-20 aspect-square rounded-full absolute "></div>
-        <div class="bg-white w-10 aspect-square rounded-full absolute "></div>
-    </div>
+    <!-- <div class="relative flex justify-center items-center">
+        <div class={clsx("bg-green-300 w-20 aspect-square rounded-full absolute ")}></div>
+        <div class={clsx("bg-green-300 w-20 aspect-square rounded-full absolute ")}></div>
+        <div class={clsx("bg-white w-10 aspect-square rounded-full absolute ")}></div>
+    </div> -->
+    <svg width="120px" height="120px">
+        <circle class={clsx("")}/>
+    </svg>
 </div>
