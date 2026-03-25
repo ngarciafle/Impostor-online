@@ -38,10 +38,10 @@
 </script>
 
 <div class="flex flex-col gap-4 items-center h-full">
-    <h1 class={winner ? 'text-green-500' : 'text-red-300' + " text-2xl md:text-4xl xl:text-5xl mt-10 md:mt-16 xl:mt-20"}>
+    <h1 class="{winner ? 'text-green-500' : ' text-red-300 ' + " text-2xl md:text-4xl xl:text-5xl mt-10 md:mt-16 xl:mt-20"}">
         {role === 'impostor' ? 'Impostor' : 'Ciudadano'}
     </h1>
-    <h3 class={winner ? 'text-green-500' : 'text-red-300' + " text-lg md:text-2xl xl:text-3xl"}>
+    <h3 class="{winner ? 'text-green-500' : 'text-red-300 '}  text-lg md:text-2xl xl:text-3xl">
         {whoWon == 'impostors' ? 'Ganan los impostores!🙉' : 'Ganan los ciudadanos!🎉'}
     </h3>
     

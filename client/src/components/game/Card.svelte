@@ -29,27 +29,28 @@
   let total: number = 9;
   let remaining: number = $state(9);
   let pct = $derived((remaining / total) * 100);
-  let color = $state("bg-green-500");
+  let color = $derived.by(() => {
+    if (pct > 66) return "bg-green-500";
+    if (pct > 33) return "bg-yellow-500";
+    return "bg-red-500";
+  });
+  let intervalLine: ReturnType<typeof setInterval>;
 
   onMount(() => {
     socket.on("round-started", () => {
       selection = "words";
     });
 
-    function tick() {
-      if (remaining <= 0) {
-      }
-      remaining--;
-      $: pct = (remaining / total) * 100;
-      color =
-        pct > 50 ? "bg-green-500" : pct > 20 ? "bg-amber-400" : "bg-red-500";
-    }
 
-    setInterval(tick, 1000);
+    intervalLine = setInterval(() => {
+      if (remaining <= 0) return;
+      remaining--;
+    }, 1000);
   });
 
   onDestroy(() => {
     socket.off("round-started");
+    clearInterval(intervalLine);
   });
 </script>
 

@@ -69,7 +69,7 @@
 
 
     {#if leader}
-        <button on:click={startGame} class="mt-6 md:mt-8 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">
+        <button onclick={startGame} class="mt-6 md:mt-8 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">
             Empezar partida
         </button>
     {:else}
@@ -78,7 +78,7 @@
         </div>
     {/if}
 
-    <button on:click={returnToMenu} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>
+    <button onclick={returnToMenu} class="mt-6 md:mt-8 bg-background-secondary shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">Volver</button>
 </div>
 
 <!-- {:else}
