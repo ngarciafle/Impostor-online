@@ -15,6 +15,7 @@
     }
 
     let { name = $bindable(), gameId = $bindable(), leader = $bindable(), role = $bindable(), word = $bindable(), selection = $bindable(), socket, players, words = $bindable() }: WaitProps = $props();
+    let started: boolean = $state(false);
 
     onMount(() => {
         words = [];
@@ -40,6 +41,7 @@
     });
 
     async function startGame() {
+        started = true;
         await fetch(`http://localhost:3000/api/start-game`, {
             method: 'POST',
             headers: {
@@ -69,7 +71,7 @@
 
 
     {#if leader}
-        <button onclick={startGame} class="mt-6 md:mt-8 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300">
+        <button onclick={startGame} class="{started ? 'opacity-40' : ''} mt-6 md:mt-8 bg-green-200 shadow shadow-foreground py-2 px-4 rounded-2xl hover:scale-105 transition-transform duration-300" disabled={started}>
             Empezar partida
         </button>
     {:else}
