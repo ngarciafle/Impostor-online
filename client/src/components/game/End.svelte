@@ -42,7 +42,7 @@
         {role === 'impostor' ? 'Impostor' : 'Ciudadano'}
     </h1>
     <h3 class="{winner ? 'text-green-500' : 'text-red-300 '}  text-lg md:text-2xl xl:text-3xl">
-        {whoWon == 'impostors' ? 'Ganan los impostores!🙉' : 'Ganan los ciudadanos!🎉'}
+        {whoWon == 'impostor' ? 'Ganan los impostores!🙉' : 'Ganan los ciudadanos!🎉'}
     </h3>
     
     

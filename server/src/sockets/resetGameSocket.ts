@@ -3,27 +3,13 @@ import { resetGame } from "../controllers/resetGame";
 import { isleader } from "../controllers/isLeader";
 
 export function resetGameSocket(io: Server, socket: Socket) {
-  socket.on("reset-game", ({}) => {
+  socket.on("reset-game", async ({}) => {
     const gameId = socket.data.gameId;
     if (!gameId) return;
+
     // Only the leader can reset the game
-    isleader(gameId, socket.id)
-      .then((isLeader) => {
-        if (!isLeader) {
-          console.error(
-            `Player with socket ID ${socket.id} is not the leader and cannot reset the game`,
-          );
-          return;
-        } else {
-          console.log(
-            `Player with socket ID ${socket.id} is the leader and is resetting the game`,
-          );
-        }
-      })
-      .catch((error) => {
-        console.error("Error checking leader status:", error);
-        return;
-      });
+    const leader = await isleader(gameId, socket.id);
+    if (!leader) return;
 
     try {
       resetGame(gameId);
