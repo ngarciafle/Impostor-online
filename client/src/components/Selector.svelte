@@ -74,7 +74,7 @@
 <div class="mt-20 md:mt-30 xl:mt-40 md:grid md:grid-cols-3 gap-4">
   {#if selection === 'wait'}
   <OnWaitSeeImpostors players={players} />
-  <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} bind:words={words} players={players}/>
+  <Wait bind:selection name={name} bind:gameId bind:word bind:role socket={socket} bind:leader={leader} bind:words={words} players={players} messages={messages} />
   <Chat socket={socket} gameId={gameId} name={name} messages={messages} />
   {:else if selection === 'words'}
     <div></div>

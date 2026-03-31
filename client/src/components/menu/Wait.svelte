@@ -12,14 +12,16 @@
         socket: Socket;
         players: string[];
         words: string[];
+        messages: any[];
     }
 
-    let { name = $bindable(), gameId = $bindable(), leader = $bindable(), role = $bindable(), word = $bindable(), selection = $bindable(), socket, players, words = $bindable() }: WaitProps = $props();
+    let { name = $bindable(), gameId = $bindable(), leader = $bindable(), role = $bindable(), word = $bindable(), selection = $bindable(), socket, players, words = $bindable(), messages = $bindable() }: WaitProps = $props();
     let started: boolean = $state(false);
 
     onMount(() => {
         words = [];
         socket.emit("join-game", { name, gameId });
+        socket.emit("get-chat");
 
         socket.on("leader-role", (data) => {
             leader = data.leader;

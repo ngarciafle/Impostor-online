@@ -9,13 +9,19 @@
     let isExpanded: boolean = $state(false);
     
     onMount(() => {
+
         socket.on("new-message", (data) => {
             messages = [...messages, data];
+        })
+
+        socket.on("get-chat", (data) => {
+            messages = data.messages;
         })
     })
     
     onDestroy(() => {
         socket.off("new-message");
+        socket.off("get-chat");
     })
     
     function sendMessage(event: Event) {
@@ -31,7 +37,7 @@
     <ChevronDown onclick={() => { isExpanded = true; }} class={"md:hidden absolute right-10 top-10  " + (isExpanded ? 'hidden' : 'block')}/>
     <ChevronUp onclick={() => { isExpanded = false; }} class={"md:hidden absolute right-10 top-10 " + (isExpanded ? 'block' : 'hidden')}/>
     
-    <div class={"transition-max-height duration-300 overflow-hidden z-20 absolute top-30 right-auto left-auto md:block bg-white/90 " + (isExpanded ? 'max-h-screen' : 'max-h-0 md:max-h-screen')}>
+    <div class={"transition-max-height duration-300 overflow-hidden z-20 absolute top-30 right-auto left-auto md:block bg-white " + (isExpanded ? 'max-h-screen' : 'max-h-0 md:max-h-screen')}>
         <div class="h-64 shadow rounded-2xl p-2 mb-4 flex flex-col">
             <div class="overflow-y-auto flex-1">
                 {#each messages as content}
