@@ -9,10 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^9.5.3",
-    "@astrojs/svelte": "^7.2.5",
+    "@astrojs/node": "^10.0.4",
+    "@astrojs/svelte": "^8.0.4",
     "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.17.1",
+    "astro": "^6.1.2",
     "clsx": "^2.1.1",
     "lucide-svelte": "^0.564.0",
     "socket.io-client": "^4.8.3",
