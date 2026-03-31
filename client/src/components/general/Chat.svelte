@@ -1,18 +1,22 @@
 <script lang="ts">
     import { io, type Socket } from "socket.io-client";
-    import { onMount, onDestroy } from 'svelte';
+    import { onMount, onDestroy, tick } from 'svelte';
     import { ChevronDown, ChevronUp } from "lucide-svelte";
     
     
     let { socket = $bindable(), gameId = $bindable(), name = $bindable(), messages = $bindable() }: { socket: Socket, gameId: string, name: string, messages: any[] } = $props();
     let messageInput: string = $state("");
     let isExpanded: boolean = $state(false);
-    
+    let chatContainer: HTMLDivElement;
+
     onMount(() => {
 
         socket.on("new-message", (data) => {
             messages = [...messages, data];
-        })
+            tick().then(() => {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            })
+        }) 
 
         socket.on("get-chat", (data) => {
             messages = data.messages;
@@ -39,7 +43,7 @@
     
     <div class={"transition-max-height duration-300 overflow-hidden z-20 absolute top-30 right-auto left-auto md:block bg-white " + (isExpanded ? 'max-h-screen' : 'max-h-0 md:max-h-screen')}>
         <div class="h-64 shadow rounded-2xl p-2 mb-4 flex flex-col">
-            <div class="overflow-y-auto flex-1">
+            <div class="overflow-y-auto flex-1" bind:this={chatContainer}>
                 {#each messages as content}
                 <div class="flex flex-row gap-2 md:gap-3">
                     <p>{content.sender}:</p>
