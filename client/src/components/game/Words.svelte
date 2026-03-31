@@ -14,6 +14,8 @@
 
 
     onMount(() => {
+        words = [];
+        
         socket.on("init-turn", (data: any) => {
             if (!data.success) return alert("Error: " + data.message);
             turn = true;
