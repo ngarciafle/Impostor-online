@@ -50,6 +50,15 @@
         players = newPlayers;
     });
 
+    socket.on("error-restart", (data) => {
+      alert(data.message);
+      selection = 'initial';
+    });
+
+    socket.on("error", (data) => {
+      alert(data.message);
+    });
+
   });
 
   onDestroy(() => {

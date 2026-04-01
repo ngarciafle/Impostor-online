@@ -25,6 +25,7 @@ export function roundWordsSocket(io: Server, socket: Socket) {
 
     if (!validatedData.success) {
         socket.emit('turn-result', { success: false, message: validatedData.error.flatten().fieldErrors });
+        socket.emit("error", { message: "Error con la palabra" });
         return;
     }
 

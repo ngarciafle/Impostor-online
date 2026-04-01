@@ -10,10 +10,11 @@ export const socketVotes = async (io: Server, socket: Socket) => {
 
         if (!validatedData.success) {
             socket.emit('turn-result', { success: false, message: validatedData.error.flatten().fieldErrors });
+            socket.emit("error", { message: "Error en el voto" });
             return;
         }
 
-        const playerName = validatedData.data.playerName;
+        const playerName = validatedData.data.playerName as string;
         const gameId = socket.data.gameId;
         if (!gameId) return;
 

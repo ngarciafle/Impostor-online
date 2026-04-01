@@ -12,6 +12,7 @@ export function chatSocket(io: Server, socket: Socket) {
 
     if (!validation.success) {
       console.error('Validation error:', validation.error);
+      socket.emit("error", { message: "Error en el mensaje" });
       return;
     }
     
@@ -25,6 +26,7 @@ export function chatSocket(io: Server, socket: Socket) {
       saveChat(gameId, senderName, message);
     } catch (error) {
       console.error('Error saving chat message:', error);
+      socket.emit("error", { message: "Error al guardar el mensaje" });
     }
 
     console.log(`Message sent to game ${gameId} from ${senderName}`);

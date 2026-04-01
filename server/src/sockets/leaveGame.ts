@@ -28,6 +28,7 @@ export const leaveGameSocket = async (io: Server, socket: Socket) => {
             socket.data.gameId = null;
         } catch (err) {
             console.error('Error leaving game:', err);
+            socket.emit("error", { message: "Error al salir de la partida" });
         }
     });
 }
