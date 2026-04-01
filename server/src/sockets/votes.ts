@@ -23,6 +23,8 @@ export const socketVotes = async (io: Server, socket: Socket) => {
         if (voteData.vote === 'bad-vote') {
             io.to(socket.id).emit('bad-vote');
             return;
+        } else if (voteData.vote === 'tie') {
+            io.to(gameId).emit('vote-info', { vote: 'tie', impostorOut: false });
         }
 
         // Send vote to all players to update the UI
@@ -31,9 +33,9 @@ export const socketVotes = async (io: Server, socket: Socket) => {
 
         if (voteData.vote === 'not-all-voted') return; // Not all players have voted yet
 
-        io.to(gameId).emit('vote-result', voteData.vote);
+        io.to(gameId).emit('vote-info', { vote: voteData.vote, impostorOut: voteData.impostorOut });
 
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 4000));
         
         // If the game has ended -> move to end and send info to show
         if (voteData.end) {

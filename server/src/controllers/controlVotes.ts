@@ -75,7 +75,7 @@ export const controlVotes = async (gameId: string, playerName: string, socketId:
         
         await game.save();
 
-        return {end: game.state === 'end', vote: votedOutPlayer.name, impostorsWin: game.impostorsWin};
+        return {end: game.state === 'end', vote: votedOutPlayer.name, impostorsWin: game.impostorsWin, impostorOut: votedOutPlayer.impostor};
 
     } catch (err) {
         console.log('Error in controlVotes:', err);
