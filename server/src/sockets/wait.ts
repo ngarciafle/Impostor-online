@@ -10,11 +10,13 @@ export function waitSocket(io: Server, socket: Socket) {
     const game = await Game.findOne({ gameId });
     if (!game) {
       console.error(`Game with ID ${gameId} not found`);
+      socket.emit("join-error", { message: "Sala no existe" });
       return;
     }
     
     if (game.state !== 'waiting') {
       console.error(`Game with ID ${gameId} is not in waiting state`);
+      socket.emit("join-error", { message: "Sala no está en estado de espera" });
       return;
     }
 

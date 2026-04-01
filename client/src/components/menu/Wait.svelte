@@ -23,6 +23,11 @@
         socket.emit("join-game", { name, gameId });
         socket.emit("get-chat");
 
+        socket.on("join-error", (data) => {
+            alert(data.message);
+            selection = 'initial';
+        });
+
         socket.on("leader-role", (data) => {
             leader = data.leader;
         })
