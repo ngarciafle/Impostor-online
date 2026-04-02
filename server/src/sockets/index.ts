@@ -8,6 +8,7 @@ import { deletePlayer } from "../controllers/deletePlayer";
 import { leaveGameSocket } from "./leaveGame";
 import { resetGameSocket } from "./resetGameSocket";
 import { sendResultsGameSocket } from "./sendResultsGame";
+import { roundWordUpdateSocket } from "./roundWordUpdate";
 
 export function setUpSocket(io: Server) {
   io.on('connection', (socket) => {
@@ -20,6 +21,7 @@ export function setUpSocket(io: Server) {
     leaveGameSocket(io, socket);
     resetGameSocket(io, socket);
     sendResultsGameSocket(io, socket);
+    roundWordUpdateSocket(io, socket);
 
     socket.on('disconnect', async () => {
       console.log('User disconnected:', socket.id);

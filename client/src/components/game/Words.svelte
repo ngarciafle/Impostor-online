@@ -11,6 +11,7 @@
     }>();
     let turn: boolean = $state(false);
     let error: string = $state("");
+    let actualWord: string = $state("");
 
 
     onMount(() => {
@@ -29,6 +30,10 @@
                 error = data.message;
             }
         })
+
+        socket.on("update-actual-word", (data: { word: string }) => {
+            actualWord = data.word;
+        });
         
         socket.on("round-ended", () => {
             selection = 'votes';
@@ -42,6 +47,7 @@
         socket.off("init-turn");
         socket.off("turn-result");
         socket.off("round-ended");
+        socket.off("update-actual-word");
     })
 
     function sendMessage(event: Event) {
@@ -50,6 +56,13 @@
         const formData = new FormData(form);
         const word = formData.get("word") as string;
         socket.emit('send-word', { gameId: gameId, senderName: name, word: word });
+    }
+
+    function updateActualWord(event: Event) {
+        event.preventDefault();
+        const input = event.currentTarget as HTMLInputElement;
+        const word = input.value;
+        socket.emit("update-actual-word", { word });
     }
 </script>
 
@@ -62,7 +75,7 @@
         </div>
         {#if turn}
             <form onsubmit={sendMessage} class="flex gap-2">
-                <input type="text" name="word" placeholder="Introduce una palabra" class="focus:outline-[.5px] rounded-xl"/>
+                <input oninput={updateActualWord} type="text" name="word" placeholder="Introduce una palabra" class="focus:outline-[.5px] rounded-xl"/>
                 {#if error}
                     <p class="text-red-500 text-sm">{error}</p>
                 {/if}
@@ -70,6 +83,7 @@
             </form>
         {:else}
             <p class="text-center text-gray-500">Esperando tu turno...</p>
+            <p> {actualWord} </p>
             <!-- <p>Actual word</p> IDEA SHARE ACTUAL INPUT THROUGH SOCKETS -->
         {/if}
     </div>

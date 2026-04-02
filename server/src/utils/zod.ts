@@ -50,3 +50,12 @@ export const voteSchema = z.object({
     z.null(),
   ]),
 });
+
+
+export const roundWordSchema = z.object({
+  word: z
+    .string()
+    .min(1, "Palabra es requerida")
+    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/, "Palabra debe contener solo letras")
+    .max(50, "Palabra no puede exceder los 50 caracteres"),
+});
