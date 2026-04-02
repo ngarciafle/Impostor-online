@@ -2,6 +2,7 @@
   import { io, type Socket } from "socket.io-client";
   import { onMount, onDestroy } from "svelte";
   import clsx from "clsx";
+  import { fly } from "svelte/transition";
 
   interface VotingProps {
     socket: Socket;
@@ -77,8 +78,10 @@
 
 <div class="flex flex-col">
   {#if result}
-    <h2>{result == "tie" ? "¡Empate!" : `¡${result} ha sido votado fuera!`}</h2>
-    <h4 class={clsx(impostorOut ? "text-red-500" : "text-green-500")}>
+    <h2 in:fly|global={{ duration: 2000, y: 50 }}>
+      {result == "tie" ? "¡Empate!" : `¡${result} ha sido votado fuera!`}
+    </h2>
+    <h4 in:fly|global={{ duration: 4000, y: 50 }} class={clsx(impostorOut ? "text-red-500" : "text-green-500")}>
       {impostorOut
         ? "¡El impostor ha sido votado fuera!"
         : "No se ha votado a un impostor"}
@@ -106,7 +109,7 @@
             sendVote(player.name);
           }}
         >
-          <p>{player.votes}</p>
+          <p in:fly|global={{ duration: 600, y: 10 }}>{player.votes}</p>
           {player.name}
         </button>
       {/each}
